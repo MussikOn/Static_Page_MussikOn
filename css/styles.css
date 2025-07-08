@@ -1,0 +1,440 @@
+/* --- Variables CSS (para colores y fuentes más fáciles de manejar) --- */
+:root {
+    --primary-color: #3498db; /* Azul vibrante */
+    --secondary-color: #2c3e50; /* Azul oscuro */
+    --accent-color: #e74c3c; /* Rojo para acentos o botones importantes */
+    --text-color: #333;
+    --light-bg: #f8f8f8;
+    --white: #ffffff;
+    --font-family-primary: 'Arial', sans-serif;
+    --font-family-secondary: 'Georgia', serif;
+}
+
+/* --- Reseteo Básico y Estilos Generales --- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-family-primary);
+    line-height: 1.6;
+    color: var(--text-color);
+    background-color: var(--white);
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.section-padding {
+    padding: 80px 0;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.bg-light {
+    background-color: var(--light-bg);
+}
+
+/* --- Encabezado (Header) --- */
+header {
+    background-color: var(--secondary-color);
+    color: var(--white);
+    padding: 15px 0;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo a {
+    color: var(--white);
+    text-decoration: none;
+    font-size: 2em;
+    font-weight: bold;
+    font-family: var(--font-family-secondary);
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+}
+
+nav ul li {
+    position: relative; /* Para el menú desplegable */
+    margin-left: 30px;
+}
+
+nav ul li a {
+    color: var(--white);
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s ease;
+    padding: 10px 0;
+    display: block;
+}
+
+nav ul li a:hover {
+    color: var(--primary-color);
+}
+
+/* --- Menú Desplegable (Dropdown) --- */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: var(--secondary-color);
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    left: 0;
+    top: 100%; /* Asegura que aparezca debajo del elemento padre */
+    border-top: 3px solid var(--primary-color);
+}
+
+.dropdown-content a {
+    color: var(--white);
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+}
+
+.dropdown-content a:hover {
+    background-color: #3a5069;
+    color: var(--primary-color);
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+/* --- Botones Generales --- */
+.btn {
+    display: inline-block;
+    padding: 12px 25px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    text-align: center;
+}
+
+.primary-btn {
+    background-color: var(--primary-color);
+    color: var(--white);
+    border: 2px solid var(--primary-color);
+}
+
+.primary-btn:hover {
+    background-color: #2980b9;
+    transform: translateY(-2px);
+}
+
+.secondary-btn {
+    background-color: transparent;
+    color: var(--primary-color);
+    border: 2px solid var(--primary-color);
+    margin-left: 15px; /* Para separar si hay varios botones */
+}
+
+.secondary-btn:hover {
+    background-color: var(--primary-color);
+    color: var(--white);
+    transform: translateY(-2px);
+}
+
+.small-btn {
+    padding: 8px 15px;
+    font-size: 0.9em;
+}
+
+/* --- Hero Section (Inicio) --- */
+.hero-section {
+    background: url('../img/hero-bg.jpg') no-repeat center center/cover; /* Asegúrate de tener esta imagen */
+    height: 70vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--white);
+    text-align: center;
+    position: relative;
+}
+
+.hero-section::before { /* Capa oscura para mejor legibilidad del texto */
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.hero-content {
+    position: relative; /* Para que el contenido esté por encima de la capa oscura */
+    z-index: 1;
+    max-width: 800px;
+}
+
+.hero-content h1 {
+    font-size: 3.5em;
+    margin-bottom: 20px;
+    font-family: var(--font-family-secondary);
+}
+
+.hero-content p {
+    font-size: 1.3em;
+    margin-bottom: 40px;
+}
+
+/* --- Secciones de Contenido General --- */
+h2 {
+    font-size: 2.5em;
+    color: var(--secondary-color);
+    text-align: center;
+    margin-bottom: 40px;
+    font-family: var(--font-family-secondary);
+}
+
+h3 {
+    font-size: 1.8em;
+    color: var(--secondary-color);
+    margin-bottom: 15px;
+}
+
+/* --- Product Grid (Productos Destacados) --- */
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+    margin-top: 30px;
+}
+
+.product-item {
+    background-color: var(--white);
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+}
+
+.product-item:hover {
+    transform: translateY(-5px);
+}
+
+.product-item img {
+    max-width: 100%;
+    height: 200px; /* Altura fija para uniformidad */
+    object-fit: cover; /* Asegura que la imagen cubra el espacio sin distorsión */
+    border-radius: 4px;
+    margin-bottom: 15px;
+}
+
+.product-item h3 {
+    font-size: 1.5em;
+    margin-bottom: 10px;
+}
+
+.product-item p {
+    font-size: 0.95em;
+    color: #555;
+    margin-bottom: 20px;
+}
+
+/* --- Testimonial Slider (Básico, sin JS aquí) --- */
+.testimonial-slider {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap; /* Para que los ítems se envuelvan en pantallas pequeñas */
+    gap: 30px;
+    margin-top: 30px;
+}
+
+.testimonial-item {
+    background-color: var(--white);
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    max-width: 450px;
+    flex: 1; /* Permite que los ítems crezcan */
+    min-width: 300px; /* Ancho mínimo para cada testimonio */
+    text-align: center;
+}
+
+.testimonial-item p {
+    font-style: italic;
+    font-size: 1.1em;
+    margin-bottom: 15px;
+    color: #444;
+}
+
+.testimonial-item span {
+    font-weight: bold;
+    color: var(--primary-color);
+    display: block;
+    margin-top: 10px;
+}
+
+
+/* --- Pie de Página (Footer) --- */
+footer {
+    background-color: var(--secondary-color);
+    color: var(--white);
+    padding: 50px 0 20px;
+    font-size: 0.95em;
+}
+
+.footer-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 30px;
+    margin-bottom: 40px;
+}
+
+.footer-col h3 {
+    color: var(--primary-color);
+    margin-bottom: 20px;
+    font-size: 1.3em;
+}
+
+.footer-col ul {
+    list-style: none;
+}
+
+.footer-col ul li {
+    margin-bottom: 10px;
+}
+
+.footer-col ul li a {
+    color: var(--white);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.footer-col ul li a:hover {
+    color: var(--primary-color);
+}
+
+.footer-col p {
+    margin-bottom: 10px;
+}
+
+.footer-col i {
+    margin-right: 8px;
+    color: var(--primary-color);
+}
+
+.social-links a {
+    color: var(--white);
+    font-size: 1.5em;
+    margin-right: 15px;
+    transition: color 0.3s ease;
+}
+
+.social-links a:hover {
+    color: var(--primary-color);
+}
+
+.footer-bottom {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding-top: 20px;
+    text-align: center;
+}
+
+/* --- Media Queries para Responsividad Básica --- */
+@media (max-width: 900px) {
+    nav ul li {
+        margin-left: 20px;
+    }
+    .hero-content h1 {
+        font-size: 2.8em;
+    }
+    .hero-content p {
+        font-size: 1.1em;
+    }
+}
+
+@media (max-width: 768px) {
+    header .container {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    nav ul {
+        margin-top: 15px;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    nav ul li {
+        margin: 0 10px 10px 10px;
+    }
+
+    .hero-section {
+        height: 60vh;
+    }
+
+    .hero-content h1 {
+        font-size: 2.2em;
+    }
+
+    .hero-content p {
+        font-size: 1em;
+    }
+
+    .btn {
+        padding: 10px 20px;
+        margin: 5px; /* Ajusta margen para botones en móviles */
+    }
+
+    h2 {
+        font-size: 2em;
+    }
+
+    .product-grid, .footer-grid {
+        grid-template-columns: 1fr; /* Una columna en pantallas pequeñas */
+    }
+
+    .testimonial-item {
+        max-width: 90%; /* Ajusta el ancho en pantallas pequeñas */
+    }
+}
+
+@media (max-width: 480px) {
+    .logo a {
+        font-size: 1.8em;
+    }
+    nav ul li a {
+        font-size: 0.9em;
+    }
+    .hero-section {
+        height: 50vh;
+    }
+    .hero-content h1 {
+        font-size: 1.8em;
+    }
+    .hero-content p {
+        font-size: 0.9em;
+    }
+    .footer-col {
+        text-align: center;
+    }
+    .footer-col ul {
+        padding-left: 0;
+    }
+}
