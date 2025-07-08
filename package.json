@@ -1,0 +1,19 @@
+{
+  "name": "static_page_mussikon",
+  "version": "1.0.0",
+  "description": "Esta es la pagina statica de mussikon",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MussikOn/Static_Page_MussikOn.git"
+  },
+  "author": "Jefry Astacio",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MussikOn/Static_Page_MussikOn/issues"
+  },
+  "homepage": "https://github.com/MussikOn/Static_Page_MussikOn#readme"
+}
