@@ -1,11 +1,12 @@
 /* --- Variables CSS (para colores y fuentes más fáciles de manejar) --- */
 :root {
-    --primary-color: #3498db; /* Azul vibrante */
-    --secondary-color: #2c3e50; /* Azul oscuro */
-    --accent-color: #e74c3c; /* Rojo para acentos o botones importantes */
-    --text-color: #333;
-    --light-bg: #f8f8f8;
+    --primary-color: #5ebeee; /* Azul vibrante */
+    --secondary-color: #014aad; /* Azul oscuro */
+    --accent-color: #ff8c8c; /* Rojo para acentos o botones importantes */
+    --text-color: #18375d;
+    --light-bg: #f8f8ff;
     --white: #ffffff;
+    --dark: #000000;
     --font-family-primary: 'Arial', sans-serif;
     --font-family-secondary: 'Georgia', serif;
 }
@@ -32,6 +33,10 @@ body {
 
 .section-padding {
     padding: 80px 0;
+}
+
+.img-logo{
+    width: 50px;
 }
 
 .text-center {
@@ -162,7 +167,7 @@ nav ul li a:hover {
 
 /* --- Hero Section (Inicio) --- */
 .hero-section {
-    background: url('../img/hero-bg.jpg') no-repeat center center/cover; /* Asegúrate de tener esta imagen */
+    background: url('../assets/MusikOn_background_gradient.png') no-repeat center center/cover; /* Asegúrate de tener esta imagen */
     height: 70vh;
     display: flex;
     align-items: center;
