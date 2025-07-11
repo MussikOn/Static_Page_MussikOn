@@ -1,7 +1,8 @@
 /* --- Estilos específicos para services.html --- */
 
 .hero-small {
-    background: url('../img/services-hero-bg.jpg') no-repeat center center/cover; /* Agrega una imagen inspiradora */
+    /* margin-top: 5px; */
+    background: url('../../assets/MusikOn_background_gradient.png') no-repeat center center/cover; /* Agrega una imagen inspiradora */
     height: 40vh; /* Más pequeño que el hero de la página principal */
     display: flex;
     align-items: center;
