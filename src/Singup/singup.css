@@ -1,0 +1,86 @@
+/* --- Estilos específicos para signup.html --- */
+
+#signup-hero {
+    background: url('../img/signup-hero-bg.jpg') no-repeat center center/cover; /* Agrega una imagen para el hero de registro */
+    height: 40vh;
+}
+
+.role-options {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px; /* Espacio entre las tarjetas de rol */
+    margin-top: 40px;
+}
+
+.role-card {
+    background-color: var(--white);
+    padding: 40px 30px;
+    border-radius: 10px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+    text-align: center;
+    max-width: 400px; /* Ancho máximo de cada tarjeta */
+    flex: 1; /* Permite que las tarjetas se adapten al espacio */
+    min-width: 280px; /* Ancho mínimo antes de apilar */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Empuja el botón al final */
+    align-items: center;
+}
+
+.role-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+}
+
+.role-card i {
+    font-size: 4em;
+    color: var(--primary-color);
+    margin-bottom: 25px;
+}
+
+.role-card h3 {
+    font-size: 2em;
+    color: var(--secondary-color);
+    margin-bottom: 15px;
+}
+
+.role-card p {
+    font-size: 1.1em;
+    color: #555;
+    margin-bottom: 30px;
+    flex-grow: 1; /* Permite que el párrafo ocupe el espacio disponible */
+}
+
+.role-card .btn {
+    width: 100%; /* Botón ocupa todo el ancho de la tarjeta */
+}
+
+.mt-50 {
+    margin-top: 50px;
+}
+
+.text-link {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+.text-link:hover {
+    color: var(--accent-color);
+    text-decoration: underline;
+}
+
+/* Media Queries para responsividad */
+@media (max-width: 768px) {
+    .role-options {
+        flex-direction: column; /* Apila las tarjetas en pantallas pequeñas */
+        align-items: center;
+    }
+
+    .role-card {
+        max-width: 90%; /* Ajusta el ancho para móviles */
+    }
+}
