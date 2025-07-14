@@ -11,6 +11,10 @@
     --font-family-secondary: 'Georgia', serif;
 }
 
+.about-about{
+    color: var(--white);
+}
+
 /* --- Reseteo Básico y Estilos Generales --- */
 * {
     margin: 0;

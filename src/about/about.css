@@ -2,7 +2,7 @@
 
 /* Reusa hero-small de services.html, pero puedes personalizar la imagen de fondo */
 #about-hero {
-    background: url('../img/about-hero-bg.jpg') no-repeat center center/cover; /* Agrega una imagen inspiradora para "Sobre Nosotros" */
+    background: url('../../assets/Personas-planeando-un-evento.jpg') no-repeat center center/cover; /* Agrega una imagen inspiradora para "Sobre Nosotros" */
     height: 40vh; /* Altura de la sección hero */
 }
 
