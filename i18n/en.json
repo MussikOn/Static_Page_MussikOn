@@ -1,0 +1,21 @@
+{
+  "language": "English",
+  "select_language": "Language",
+  "home": "Home",
+  "app": "The App",
+  "docs": "Documentation",
+  "devs": "Developers",
+  "contact": "Contact",
+  "search_placeholder": "Search keywords...",
+  "search_label": "Search documentation",
+  "last_updated": "Last updated:",
+  "copy": "Copy",
+  "copied": "Copied!",
+  "no_results": "No results found.",
+  "toc": "Table of Contents",
+  "no_sections": "No sections in this tab.",
+  "loading": "Loading content...",
+  "load_error": "Could not load content.",
+  "dark_mode": "Dark mode",
+  "light_mode": "Light mode"
+} 

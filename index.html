@@ -4,124 +4,1370 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="./assets/Logo.png"/>
-    <title>Mussikon: Tu Sonido, Nuestra Pasión</title>
-    <link rel="stylesheet" href="css/styles.css">
+    <title>MussikOn: Plataforma, App y Documentación</title>
+    <link rel="stylesheet" href="css/modern.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+      .tab-btn { background: var(--glass); border: none; padding: 10px 24px; border-radius: 20px; margin: 0 6px; font-weight: bold; cursor: pointer; transition: background 0.2s, color 0.2s; font-size: 1.08em; }
+      .tab-btn.active { background: var(--primary); color: #fff; }
+      .tab-content { display: none; }
+      .tab-content.active { display: block; }
+      .api-table { width: 100%; border-collapse: collapse; margin-top: 18px; background: var(--glass); border-radius: 12px; overflow: hidden; }
+      .api-table th, .api-table td { border: 1px solid #e0e0e0; padding: 8px 12px; text-align: left; }
+      .api-table th { background: #e3eafc; }
+      .github-links { margin-top: 12px; }
+      .github-card { display: inline-block; background: var(--glass); border-radius: 18px; box-shadow: var(--card-shadow); padding: 18px 24px; margin: 12px 12px 0 0; min-width: 260px; vertical-align: top; }
+      .github-card i { font-size: 2em; color: var(--primary); margin-right: 12px; vertical-align: middle; }
+      .github-card span { font-weight: bold; font-size: 1.1em; }
+      .github-card p { margin: 8px 0 0 36px; font-size: 0.98em; color: #444; }
+      .search-bar { display: flex; justify-content: center; margin: 32px 0 24px 0; }
+      .search-input { width: 420px; max-width: 90vw; padding: 12px 18px; border-radius: 24px; border: 1px solid #e0e0e0; font-size: 1.1em; outline: none; transition: border 0.2s; }
+      .search-input:focus { border: 1.5px solid var(--primary); }
+      .search-clear { background: none; border: none; color: #888; font-size: 1.2em; margin-left: -32px; cursor: pointer; }
+      .doc-section { transition: opacity 0.2s, max-height 0.2s; }
+      .doc-section.hide { opacity: 0.15; max-height: 0; overflow: hidden; pointer-events: none; }
+      .glass-card { background: var(--glass); backdrop-filter: var(--glass-blur); border-radius: var(--border-radius); box-shadow: var(--card-shadow); padding: 32px 28px; margin: 32px auto; max-width: 900px; position: relative; animation: fadeInUp 0.7s cubic-bezier(.23,1.01,.32,1) both; }
+      .glass-card h2, .glass-card h3, .glass-card h4 { color: var(--primary); margin-top: 0; }
+      .glass-card ul { list-style: none; padding-left: 0; }
+      .glass-card ul li { margin-bottom: 10px; position: relative; padding-left: 28px; }
+      .glass-card ul li:before { content: '\2714'; color: var(--accent); position: absolute; left: 0; font-size: 1.1em; top: 2px; }
+      .section-divider { width: 100%; height: 2px; background: linear-gradient(90deg, var(--primary) 0%, var(--accent) 100%); border: none; margin: 48px 0 32px 0; opacity: 0.18; border-radius: 2px; }
+      .code-block { background: #232946; color: #fff; border-radius: 14px; padding: 18px 18px 18px 48px; font-size: 1.05em; font-family: 'Fira Mono', 'Consolas', monospace; margin: 18px 0; position: relative; overflow-x: auto; }
+      .code-block .copy-btn { position: absolute; top: 12px; right: 18px; background: var(--accent); color: var(--primary); border: none; border-radius: 8px; padding: 4px 12px; font-size: 0.95em; cursor: pointer; opacity: 0.85; transition: background 0.2s; }
+      .code-block .copy-btn:hover { background: var(--primary); color: #fff; opacity: 1; }
+      .section-title { font-size: 2.1em; font-weight: 700; color: var(--primary); margin-bottom: 18px; letter-spacing: -1px; }
+      .fade-in-initial { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease-out, transform 0.6s ease-out; }
+      .fade-in { opacity: 1; transform: translateY(0); }
+      .quick-link-card {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background: var(--glass);
+        backdrop-filter: var(--glass-blur);
+        border-radius: 18px;
+        box-shadow: var(--card-shadow);
+        padding: 22px 0 14px 0;
+        min-width: 90px;
+        max-width: 180px;
+        font-size: 1.5em;
+        font-weight: 600;
+        color: var(--primary);
+        text-decoration: none;
+        transition: background 0.18s, color 0.18s, transform 0.18s;
+        border: 2px solid transparent;
+        margin-bottom: 0;
+        position: relative;
+        width: 100%;
+        box-sizing: border-box;
+      }
+      .quick-link-card span {
+        font-size: 1.02em;
+        font-weight: 500;
+        margin-top: 8px;
+        color: var(--text);
+      }
+      .quick-link-card:hover, .quick-link-card:focus {
+        background: var(--primary-gradient);
+        color: #fff;
+        transform: translateY(-4px) scale(1.04);
+        border: 2px solid var(--accent);
+      }
+      .quick-link-card:hover span, .quick-link-card:focus span {
+        color: #fff;
+      }
+      .quick-link-card.alt {
+        background: rgba(0,229,255,0.10);
+        color: var(--primary);
+      }
+      .quick-link-card.alt:hover, .quick-link-card.alt:focus {
+        background: linear-gradient(135deg, #00e5ff 0%, #1565c0 100%);
+        color: #fff;
+      }
+      .quick-link-desc {
+        display: block;
+        font-size: 0.92em;
+        color: #3a5069;
+        margin-top: 6px;
+        font-weight: 400;
+        opacity: 0.85;
+        text-align: center;
+        line-height: 1.2;
+      }
+      .quick-link-card:hover .quick-link-desc, .quick-link-card:focus .quick-link-desc {
+        color: #fff;
+        opacity: 1;
+      }
+      @media (max-width: 900px) {
+        .quick-link-card {
+          font-size: 1.08em;
+          min-width: 80px;
+          max-width: 100%;
+          padding-left: 2vw;
+          padding-right: 2vw;
+        }
+        .glass-card {
+          padding-left: 2vw;
+          padding-right: 2vw;
+        }
+      }
+      @media (max-width: 600px) {
+        .quick-link-card {
+          font-size: 0.98em;
+          padding: 12px 0 8px 0;
+          min-width: 60px;
+          max-width: 100vw;
+        }
+        .quick-link-card span {
+          font-size: 0.95em;
+        }
+        .glass-card {
+          padding-left: 1vw;
+          padding-right: 1vw;
+        }
+      }
+      .quick-links-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+        gap: 16px;
+        justify-items: center;
+        padding-left: 2vw;
+        padding-right: 2vw;
+      }
+      @media (max-width: 600px) {
+        .quick-links-grid {
+          grid-template-columns: repeat(2, 1fr);
+          gap: 10px;
+          padding-left: 1vw;
+          padding-right: 1vw;
+        }
+      }
+    </style>
 </head>
 <body>
     <header>
         <div class="container">
             <div class="logo">
-                
-                <a href="index.html"> <img class="img-logo" src="./assets/Logo_Letter.png" alt=""></a>
-                </div>
-            <nav>
+                <a href="index.html"> <img class="img-logo" src="./assets/Logo_Letter.png" alt="Logo de MussikOn, letra estilizada" loading="eager"></a>
+            </div>
+            <button class="mobile-menu-button" onclick="toggleMobileMenu()" aria-label="Abrir menú de navegación"><i class="fas fa-bars"></i></button>
+            <button id="darkModeToggle" class="btn small-btn secondary-btn" aria-label="Alternar modo oscuro" style="margin-left:12px; font-size:1.2em;">🌙</button>
+            <nav role="navigation" aria-label="Navegación principal">
                 <ul>
-                    <li><a href="index.html">Inicio</a></li>
-                    <li><a href="./src/about/about.html">Sobre Nosotros</a></li>
-                    <li class="dropdown">
-                        <a href="products.html">Productos</a>
-                        <div class="dropdown-content">
-                            <a href="products.html#cuerda">Cuerda</a>
-                            <a href="products.html#viento">Viento</a>
-                            <a href="products.html#percusion">Percusión</a>
-                            <a href="products.html#teclado">Teclado</a>
-                            <a href="products.html#accesorios">Accesorios</a>
-                        </div>
-                    </li>
-                    <li><a href="./src/services/services.html">Servicios</a></li>
+                    <li><a href="#inicio">Inicio</a></li>
+                    <li><a href="#app">La App</a></li>
+                    <li><a href="#docs">Documentación</a></li>
+                    <li><a href="#devs">Desarrolladores</a></li>
                     <li><a href="#contact">Contacto</a></li>
                 </ul>
             </nav>
         </div>
     </header>
 
-    <main>
-        <section id="hero" class="hero-section">
-            <div class="hero-content">
-                <h1>Mussikon: Donde la Música Cobra Vida</h1>
-                <p>Explora nuestra app para encontar el músico ideal para tu evento.</p>
-                <a href="products.html" class="btn primary-btn">Explorar Productos</a>
-                <a href="./src/services/services.html" class="btn secondary-btn">Conoce Nuestros Servicios</a>
-            </div>
-        </section>
+    <nav id="breadcrumbs" aria-label="Ruta de navegación" style="margin:0 auto 12px auto;max-width:1100px;padding:8px 18px 0 18px;font-size:1.05em;color:var(--primary-blue-dark);">
+      <span>Inicio</span> <span style="margin:0 6px;">/</span> <span id="breadcrumb-current">Guía Rápida</span>
+    </nav>
+    <div style="display:flex;max-width:1100px;margin:0 auto;">
+      <main role="main" aria-label="Contenido principal" style="flex:1 1 0;min-width:0;">
+        <div style="max-width:1100px;margin:0 auto 18px auto;padding:0 18px;">
+          <label for="globalSearch" style="font-weight:500;display:block;margin-bottom:4px;">🔎 Buscar en la documentación</label>
+          <input id="globalSearch" type="search" placeholder="Buscar palabras clave..." aria-label="Buscar en la documentación" style="width:100%;max-width:420px;padding:8px 12px;border-radius:8px;border:1.5px solid #93c5fd;font-size:1.08em;">
+        </div>
+        <section class="hero-modern" id="inicio">
+          <div class="icon" aria-hidden="true" style="display:flex;align-items:center;gap:8px;">
+            <svg width="32" height="32" viewBox="0 0 256 256" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false"><rect width="256" height="256" fill="none"/><path d="M208,40V168a32,32,0,1,1-32-32,31.6,31.6,0,0,1,8,1.1V88H104V184a32,32,0,1,1-32-32,31.6,31.6,0,0,1,8,1.1V56a8,8,0,0,1,6.1-7.8l96-24A8,8,0,0,1,208,40Z" fill="#2563eb"/></svg>
+            <span style="font-size:1.2em;">MussikOn</span>
+          </div>
+          <h1>🎤 MussikOn: Plataforma, App y Documentación 🎷</h1>
+          <p>Conecta músicos y organizadores de eventos musicales con una experiencia moderna, centralizada y en tiempo real. <span style="font-size:1.3em;">🌎✨</span></p>
+          <div style="margin-top:32px;">
+            <a href="#app" class="btn primary-btn" style="margin-right:12px;" aria-label="Explorar la App">🚀 Explorar la App</a>
+            <a href="#docs" class="btn secondary-btn" aria-label="Ver Documentación">📚 Ver Documentación</a>
+              </div>
+          </section>
+        <div class="glass-card" id="app">
+          <h2 class="section-title">¿Qué es MussikOn? 🤔🎵</h2>
+          <ul>
+            <li>📅 Gestión centralizada de solicitudes y eventos</li>
+            <li>⚡ Matching en tiempo real entre músicos y usuarios (tipo Uber)</li>
+            <li>🖥️ UI moderna, responsive y accesible</li>
+            <li>👤 Soporte para múltiples roles (músico, organizador)</li>
+            <li>�� Internacionalización (ES/EN)</li>
+          </ul>
+        </div>
+        <div class="glass-card">
+          <h2 class="section-title" id="pantallas">Pantalla "Mis Solicitudes" 📝🎺</h2>
+          <ul>
+            <li>🧑‍🤝‍🧑 Pantalla central para músicos y organizadores, accesible desde el menú lateral</li>
+            <li>🗂️ Tabs: Pendientes, Asignados/Agendados, Todos</li>
+            <li>🔔 Feedback visual inmediato y notificaciones en tiempo real</li>
+            <li>🧩 Integración con <b>EventList</b> y endpoints REST</li>
+          </ul>
+        </div>
 
-        <section id="featured-products" class="section-padding">
-            <div class="container">
-                <h2>Productos Destacados</h2>
-                <div class="product-grid">
-                    <div class="product-item">
-                        <img src="./assets/Logo_Letter.png" alt="Guitarra Acústica">
-                        <h3>Guitarra Acústica "Melodía"</h3>
-                        <p>Sonido cálido y resonante, ideal para principiantes y expertos.</p>
-                        <a href="product_detail_guitarra.html" class="btn small-btn">Ver Detalles</a>
+          <section id="docs" class="section-docs doc-section">
+              <div class="container">
+                  <h2>Documentación Técnica Completa</h2>
+                  <div style="margin-bottom: 24px;">
+                    <button class="tab-btn active" onclick="showTab('guia')" role="tab" aria-selected="true" aria-label="Guía Rápida">
+                      <svg width="20" height="20" viewBox="0 0 256 256" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false"><rect width="256" height="256" fill="none"/><path d="M128,24A104,104,0,1,0,232,128,104.1,104.1,0,0,0,128,24Zm0,192a88,88,0,1,1,88-88A88.1,88.1,0,0,1,128,216Zm0-160a8,8,0,0,1,8,8v56a8,8,0,0,1-16,0V64A8,8,0,0,1,128,56Zm0,104a12,12,0,1,1,12-12A12,12,0,0,1,128,160Z" fill="#2563eb"/></svg>
+                      Guía Rápida
+                    </button>
+                    <button class="tab-btn" onclick="showTab('arquitectura')" role="tab" aria-selected="false" aria-label="Arquitectura">🏗️ Arquitectura</button>
+                    <button class="tab-btn" onclick="showTab('tecnologias')" role="tab" aria-selected="false" aria-label="Tecnologías">💻 Tecnologías</button>
+                    <button class="tab-btn" onclick="showTab('uiux')" role="tab" aria-selected="false" aria-label="UI/UX y Componentes">🎨 UI/UX y Componentes</button>
+                    <button class="tab-btn" onclick="showTab('core')" role="tab" aria-selected="false" aria-label="Funcionalidades Core">⚙️ Funcionalidades Core</button>
+                    <button class="tab-btn" onclick="showTab('pantallas')" role="tab" aria-selected="false" aria-label="Pantallas">🗺️ Pantallas</button>
+                    <button class="tab-btn" onclick="showTab('api')" role="tab" aria-selected="false" aria-label="APIs y Servicios">🔗 APIs y Servicios</button>
+                    <button class="tab-btn" onclick="showTab('estado')" role="tab" aria-selected="false" aria-label="Estado Actual">📊 Estado Actual</button>
+                    <button class="tab-btn" onclick="showTab('i18n')" role="tab" aria-selected="false" aria-label="Internacionalización">🌍 Internacionalización</button>
+                    <button class="tab-btn" onclick="showTab('testing')" role="tab" aria-selected="false" aria-label="Testing y Calidad">🧪 Testing y Calidad</button>
+                    <button class="tab-btn" onclick="showTab('deploy')" role="tab" aria-selected="false" aria-label="Despliegue y Build">🚀 Despliegue y Build</button>
+                    <button class="tab-btn" onclick="showTab('dev')" role="tab" aria-selected="false" aria-label="Guías de Desarrollo">📚 Guías de Desarrollo</button>
+                    <button class="tab-btn" onclick="showTab('componentes')" role="tab" aria-selected="false" aria-label="Componentes">🧩 Componentes</button>
+                    <button class="tab-btn" onclick="showTab('analisis')" role="tab" aria-selected="false" aria-label="Análisis">🔍 Análisis</button>
+                  </div>
+                  <!-- Aquí se integrarán los bloques de documentación, arquitectura, features, componentes, etc. -->
+                  <!-- El contenido de cada tab se integrará aquí, usando la información de la documentación y los archivos técnicos -->
+                  <!-- ... -->
+                  <div id="tab-guia" class="tab-content active">
+                    <div class="glass-card" style="margin-bottom:32px;">
+                      <h2 class="section-title" style="font-size:2em;">🚦 Guía Rápida</h2>
+                      <div style="display:flex; flex-wrap:wrap; gap:32px; justify-content:center;">
+                        <div style="flex:1 1 260px; min-width:240px; max-width:320px; background:var(--glass); border-radius:18px; box-shadow:var(--card-shadow); padding:24px 18px; margin-bottom:18px; text-align:center;">
+                          <div style="font-size:2.2em;">👋</div>
+                          <h4 style="margin:12px 0 8px 0;">Nuevos Desarrolladores</h4>
+                          <ul style="text-align:left;">
+                            <li>Onboarding visual y rápido</li>
+                            <li>Primeros pasos y setup</li>
+                            <li>Acceso directo a <a href="#tab-arquitectura" onclick="showTab('arquitectura')">arquitectura</a> y <a href="#tab-tecnologias" onclick="showTab('tecnologias')">tecnologías</a></li>
+                    </ul>
+                          <a href="#tab-arquitectura" onclick="showTab('arquitectura')" class="btn small-btn primary-btn" style="margin-top:8px;">🏗️ Ver Arquitectura</a>
+                        </div>
+                        <div style="flex:1 1 260px; min-width:240px; max-width:320px; background:var(--glass); border-radius:18px; box-shadow:var(--card-shadow); padding:24px 18px; margin-bottom:18px; text-align:center;">
+                          <div style="font-size:2.2em;">💻</div>
+                          <h4 style="margin:12px 0 8px 0;">Desarrolladores Avanzados</h4>
+                          <ul style="text-align:left;">
+                            <li>Detalles técnicos y APIs</li>
+                            <li>Patrones y flujos avanzados</li>
+                            <li>Acceso rápido a <a href="#tab-api" onclick="showTab('api')">APIs</a> y <a href="#tab-dev" onclick="showTab('dev')">guías de desarrollo</a></li>
+                          </ul>
+                          <a href="#tab-api" onclick="showTab('api')" class="btn small-btn secondary-btn" style="margin-top:8px;">🔌 Ver APIs</a>
+                        </div>
+                        <div style="flex:1 1 260px; min-width:240px; max-width:320px; background:var(--glass); border-radius:18px; box-shadow:var(--card-shadow); padding:24px 18px; margin-bottom:18px; text-align:center;">
+                          <div style="font-size:2.2em;">🎨</div>
+                          <h4 style="margin:12px 0 8px 0;">Diseñadores UI/UX</h4>
+                          <ul style="text-align:left;">
+                            <li>Sistema de diseño y componentes</li>
+                            <li>Guía de navegación y temas</li>
+                            <li>Acceso a <a href="#tab-uiux" onclick="showTab('uiux')">UI/UX</a> y <a href="#tab-componentes" onclick="showTab('componentes')">componentes</a></li>
+                          </ul>
+                          <a href="#tab-uiux" onclick="showTab('uiux')" class="btn small-btn primary-btn" style="margin-top:8px;">🎨 Ver UI/UX</a>
+                        </div>
+                        <div style="flex:1 1 260px; min-width:240px; max-width:320px; background:var(--glass); border-radius:18px; box-shadow:var(--card-shadow); padding:24px 18px; margin-bottom:18px; text-align:center;">
+                          <div style="font-size:2.2em;">🧪</div>
+                          <h4 style="margin:12px 0 8px 0;">QA & Testing</h4>
+                          <ul style="text-align:left;">
+                            <li>Estrategia de testing y calidad</li>
+                            <li>Bugs conocidos y troubleshooting</li>
+                            <li>Acceso a <a href="#tab-testing" onclick="showTab('testing')">testing</a> y <a href="#tab-analisis" onclick="showTab('analisis')">estado actual</a></li>
+                          </ul>
+                          <a href="#tab-testing" onclick="showTab('testing')" class="btn small-btn secondary-btn" style="margin-top:8px;">🧪 Ver Testing</a>
+                        </div>
+                      </div>
                     </div>
-                    <div class="product-item">
-                        <img src="img/piano_ejemplo.jpg" alt="Piano Digital">
-                        <h3>Piano Digital "Harmony Pro"</h3>
-                        <p>Experiencia de teclado auténtica con funciones modernas.</p>
-                        <a href="product_detail_piano.html" class="btn small-btn">Ver Detalles</a>
+                    <div class="glass-card" style="margin-bottom:24px;">
+                      <h4 style="margin-bottom:18px;">🔎 Accesos Rápidos</h4>
+                      <div class="quick-links-grid">
+                        <a href="#tab-arquitectura" onclick="showTab('arquitectura')" class="quick-link-card">
+                          🏗️<span>Arquitectura</span>
+                          <small class="quick-link-desc">Estructura, capas y patrones del proyecto</small>
+                        </a>
+                        <a href="#tab-tecnologias" onclick="showTab('tecnologias')" class="quick-link-card alt">
+                          🛠️<span>Tecnologías</span>
+                          <small class="quick-link-desc">Stack, dependencias y herramientas clave</small>
+                        </a>
+                        <a href="#tab-uiux" onclick="showTab('uiux')" class="quick-link-card">
+                          🎨<span>UI/UX</span>
+                          <small class="quick-link-desc">Sistema de diseño, temas y experiencia visual</small>
+                        </a>
+                        <a href="#tab-core" onclick="showTab('core')" class="quick-link-card alt">
+                          🧩<span>Core</span>
+                          <small class="quick-link-desc">Funcionalidades principales de la app</small>
+                        </a>
+                        <a href="#tab-pantallas" onclick="showTab('pantallas')" class="quick-link-card">
+                          📱<span>Pantallas</span>
+                          <small class="quick-link-desc">Navegación y vistas principales</small>
+                        </a>
+                        <a href="#tab-api" onclick="showTab('api')" class="quick-link-card alt">
+                          🔌<span>APIs</span>
+                          <small class="quick-link-desc">Endpoints, servicios y ejemplos de uso</small>
+                        </a>
+                        <a href="#tab-estado" onclick="showTab('estado')" class="quick-link-card">
+                          📦<span>Datos</span>
+                          <small class="quick-link-desc">Gestión de estado y persistencia</small>
+                        </a>
+                        <a href="#tab-i18n" onclick="showTab('i18n')" class="quick-link-card alt">
+                          🌍<span>i18n</span>
+                          <small class="quick-link-desc">Internacionalización y traducciones</small>
+                        </a>
+                        <a href="#tab-testing" onclick="showTab('testing')" class="quick-link-card">
+                          🧪<span>Testing</span>
+                          <small class="quick-link-desc">Estrategia de pruebas y calidad</small>
+                        </a>
+                        <a href="#tab-deploy" onclick="showTab('deploy')" class="quick-link-card alt">
+                          🚀<span>Build</span>
+                          <small class="quick-link-desc">Despliegue, build y automatización</small>
+                        </a>
+                        <a href="#tab-dev" onclick="showTab('dev')" class="quick-link-card">
+                          👨‍💻<span>Dev</span>
+                          <small class="quick-link-desc">Guías, convenciones y troubleshooting</small>
+                        </a>
+                        <a href="#tab-componentes" onclick="showTab('componentes')" class="quick-link-card alt">
+                          ��<span>Componentes</span>
+                          <small class="quick-link-desc">Documentación de UI y componentes clave</small>
+                        </a>
+                        <a href="#tab-analisis" onclick="showTab('analisis')" class="quick-link-card">
+                          📊<span>Estado</span>
+                          <small class="quick-link-desc">Estado actual y métricas del proyecto</small>
+                        </a>
+                      </div>
                     </div>
-                    <div class="product-item">
-                        <img src="img/violin_ejemplo.jpg" alt="Violín de Estudio">
-                        <h3>Violín de Estudio "Virtuoso"</h3>
-                        <p>Fabricado con maderas finas para un tono claro y vibrante.</p>
-                        <a href="product_detail_violin.html" class="btn small-btn">Ver Detalles</a>
+                  </div>
+                  <div id="tab-arquitectura" class="tab-content">
+                    <h3>🏗️ Arquitectura y Estructura</h3>
+                    <a href="src/docs-arquitectura.html" target="_blank" class="btn secondary-btn" style="margin-bottom:18px;display:inline-block;">Ver página completa de Arquitectura <i class="fas fa-external-link-alt"></i></a>
+                    <h4>Visión General</h4>
+                    <p><b>MussikOn</b> sigue una arquitectura modular basada en <b>Clean Architecture</b> y <b>Domain-Driven Design (DDD)</b>, optimizada para aplicaciones móviles con React Native y Expo. Esta arquitectura está diseñada para ser escalable, mantenible y fácil de entender, separando responsabilidades y permitiendo independencia tecnológica.</p>
+                    <h4>Patrón Arquitectónico</h4>
+                    <pre><code>┌─────────────────────────────────────┐
+│           Presentation Layer        │ ← React Components, Screens
+├─────────────────────────────────────┤
+│           Business Logic Layer      │ ← Services, Use Cases
+├─────────────────────────────────────┤
+│           Data Layer                │ ← APIs, Local Storage
+└─────────────────────────────────────┘
+</code></pre>
+                    <ul>
+                      <li><b>Separación de Responsabilidades:</b> Cada capa tiene una responsabilidad específica.</li>
+                      <li><b>Dependencias Unidireccionales:</b> Las dependencias fluyen hacia adentro (de UI a lógica, de lógica a datos).</li>
+                      <li><b>Independencia de Frameworks:</b> La lógica de negocio es independiente de React Native.</li>
+                      <li><b>Testabilidad:</b> Cada capa puede ser testeada independientemente.</li>
+                    </ul>
+                    <h4>Estructura de Carpetas</h4>
+                    <pre><code>src/
+├── app/                    # Punto de entrada de la aplicación
+│   └── App.tsx           # Componente raíz con configuración global
+├── appTypes/              # Definiciones de tipos TypeScript
+│   └── DatasTypes.ts     # Tipos compartidos de la aplicación
+├── components/            # Componentes reutilizables
+│   ├── ui/               # Componentes de interfaz básicos
+│   ├── features/         # Componentes específicos de funcionalidades
+│   ├── forms/            # Componentes de formularios
+│   └── navigation/       # Componentes de navegación
+├── screens/              # Pantallas de la aplicación
+│   ├── auth/             # Pantallas de autenticación
+│   ├── dashboard/        # Pantalla principal
+│   ├── events/           # Pantallas de eventos
+│   ├── profile/          # Pantallas de perfil
+│   └── settings/         # Pantallas de configuración
+├── services/             # Servicios y APIs
+│   ├── api.ts           # Cliente HTTP configurado
+│   └── events.ts        # Servicios específicos de eventos
+├── store/                # Gestión de estado global (Redux)
+│   ├── store.ts         # Configuración del store
+│   └── slices/          # Slices de Redux por dominio
+├── hooks/                # Custom hooks
+│   └── useSocket.tsx    # Hook para WebSocket
+├── utils/                # Utilidades y helpers
+│   ├── functions.ts     # Funciones de utilidad
+│   ├── auth.ts          # Utilidades de autenticación
+│   └── socket.ts        # Utilidades de WebSocket
+├── config/               # Configuración de la aplicación
+│   └── environment.ts   # Variables de entorno
+├── contexts/             # Contextos de React
+│   └── LanguageContext.tsx # Contexto de idioma
+├── i18n/                 # Internacionalización
+│   ├── index.ts         # Configuración de i18next
+│   └── locales/         # Archivos de traducción
+├── theme/                # Sistema de diseño
+│   ├── colors.ts        # Paleta de colores
+│   ├── typography.ts    # Tipografías
+│   ├── spacing.ts       # Espaciado
+│   └── theme.ts         # Configuración de temas
+├── styles/               # Estilos globales
+│   ├── Styles.ts        # Estilos compartidos
+│   └── media_responsive.ts # Responsive design
+└── navigation/           # Configuración de navegación
+    └── index.ts         # Configuración de rutas
+</code></pre>
+                    <h4>Flujo de Datos</h4>
+                    <ul>
+                      <li><b>Flujo de Autenticación:</b> Usuario → Login Screen → Auth Service → API → Secure Store → Redux Store → Navigation</li>
+                      <li><b>Flujo de Eventos:</b> Event Screen → Event Service → API → Redux Store → UI Update</li>
+                      <li><b>Flujo de Chat en Tiempo Real:</b> Socket Connection → Message Handler → Redux Store → UI Update</li>
+                    </ul>
+                    <h4>Patrones de Diseño Implementados</h4>
+                    <ul>
+                      <li><b>Container/Presentational Pattern:</b> Separación entre lógica de datos y presentación visual.</li>
+                      <li><b>Custom Hooks Pattern:</b> Lógica reutilizable y desacoplada de la UI.</li>
+                      <li><b>Service Layer Pattern:</b> Servicios centralizados para acceso a datos y lógica de negocio.</li>
+                    </ul>
+                    <h5>Ejemplo de Container/Presentational</h5>
+                    <pre><code class="language-tsx">// Container Component
+const EventListContainer = () => {
+  const events = useAppSelector(state => state.events.list);
+  const dispatch = useAppDispatch();
+  return <EventList events={events} onEventPress={handleEventPress} />;
+};
+// Presentational Component
+const EventList = ({ events, onEventPress }) => (
+  <FlatList
+    data={events}
+    renderItem={({ item }) => <EventCard event={item} onPress={onEventPress} />}
+  />
+);
+</code></pre>
+                    <h5>Ejemplo de Custom Hook</h5>
+                    <pre><code class="language-tsx">export const useAuth = () => {
+  const { isAuthenticated, user } = useAppSelector(state => state.auth);
+  const dispatch = useAppDispatch();
+  const login = async (credentials) => { /* lógica de login */ };
+  const logout = () => { dispatch(logout()); };
+  return { isAuthenticated, user, login, logout };
+};
+</code></pre>
+                    <h5>Ejemplo de Service Layer</h5>
+                    <pre><code class="language-ts">export const eventService = {
+  async getEvents() {
+    return apiService.get('/events');
+  },
+  async createEvent(eventData) {
+    return apiService.post('/events', eventData);
+  }
+};
+</code></pre>
+                    <h4>Gestión de Estado</h4>
+                    <ul>
+                      <li><b>Redux Toolkit:</b> Store centralizado, slices por dominio, DevTools.</li>
+                      <li><b>Slices implementados:</b> authSlice, themeSlice, languageSlice, notificationsSlice, appSlice, formsSlice.</li>
+                    </ul>
+                    <h4>Integración de APIs y WebSocket</h4>
+                    <ul>
+                      <li><b>Axios:</b> Cliente HTTP principal, interceptores, reintentos, timeouts.</li>
+                      <li><b>Socket.io:</b> Comunicación en tiempo real, reconexión automática, eventos tipados.</li>
+                    </ul>
+                    <h4>Internacionalización</h4>
+                    <ul>
+                      <li><b>i18next:</b> Detección automática, persistencia, fallbacks, interpolación.</li>
+                    </ul>
+                    <h4>Sistema de Diseño</h4>
+                    <ul>
+                      <li><b>Design tokens:</b> Colores, tipografías, espaciado, bordes.</li>
+                      <li><b>Temas:</b> Claro/oscuro, responsive.</li>
+                    </ul>
+                    <h4>Seguridad</h4>
+                    <ul>
+                      <li><b>JWT, Secure Store, token refresh, logout seguro.</b></li>
+                      <li><b>Validación frontend, sanitización, manejo de errores.</b></li>
+                    </ul>
+                    <h4>Navegación</h4>
+                    <ul>
+                      <li><b>React Navigation:</b> Stack, Tab, Drawer, deep linking.</li>
+                    </ul>
+                    <h4>Testing Strategy</h4>
+                    <ul>
+                      <li><b>Unit, integration y E2E tests:</b> Jest, React Native Testing Library, Mock Service Worker.</li>
+                    </ul>
+                    <h4>Performance</h4>
+                    <ul>
+                      <li><b>Lazy loading, memoization, bundle splitting, optimización de imágenes.</b></li>
+                      <li><b>Métricas:</b> bundle < 50MB, load < 3s, memoria < 200MB, 60 FPS.</li>
+                    </ul>
+                    <h4>Ciclo de Desarrollo</h4>
+                    <pre><code>npm start          # Iniciar en modo desarrollo
+npm run android    # Ejecutar en Android
+npm run ios        # Ejecutar en iOS
+npm test           # Ejecutar tests
+eas build --platform android  # Build para Android
+eas build --platform ios      # Build para iOS
+</code></pre>
+                    <h4>Deployment</h4>
+                    <ul>
+                      <li><b>EAS Build:</b> Perfiles, CI/CD, OTA updates.</li>
+                    </ul>
+                    <h4>Pantalla "Mis Solicitudes" y Arquitectura</h4>
+                    <p>La pantalla <b>"Mis Solicitudes"</b> es un componente central de la arquitectura moderna de MussikOn. Permite a músicos y organizadores gestionar todas sus solicitudes/eventos en progreso desde un solo lugar, accesible desde el menú lateral.</p>
+                    <ul>
+                      <li>Accesible desde el menú lateral para ambos roles.</li>
+                      <li>Usa el componente reutilizable <code>EventList</code> en diferentes modos (pendientes, asignados/agendados, todos).</li>
+                      <li>Consume los endpoints REST <code>/events/my-pending</code>, <code>/events/my-assigned</code>, <code>/events/my-scheduled</code>, <code>/events/my-events</code>.</li>
+                      <li>UI moderna con tabs y feedback visual inmediato.</li>
+                    </ul>
+                    <h5>Diagrama de Navegación</h5>
+                    <pre><code class="language-mermaid">graph TD;
+  Sidebar --> MyEventsList;
+  MyEventsList --> EventList;
+  EventList --> API[API REST /events/*];
+  Sidebar --> ShareMusician;
+  Sidebar --> EventList;
+  Sidebar --> Dashboard;
+</code></pre>
+                    <h4>Referencias y Enlaces</h4>
+                    <ul>
+                      <li><a href="https://github.com/JefryAstacio/APP_MussikOn_React_Native_Expo" target="_blank">Repositorio Frontend</a></li>
+                      <li><a href="https://github.com/JefryAstacio/APP_Mussikon_Express" target="_blank">Repositorio Backend</a></li>
+                      <li><a href="https://github.com/JefryAstacio/Static_Page_MussikOn" target="_blank">Repositorio Página Estática</a></li>
+                      <li><a href="/api-docs" target="_blank">Swagger API Docs</a></li>
+                    </ul>
+                    <p style="margin-top:16px;"><span class="last-updated"></span></p>
+                  </div>
+                  <div id="tab-tecnologias" class="tab-content">
+                    <div class="glass-card" style="margin-bottom:32px;">
+                      <h2 class="section-title" style="font-size:2em;">🛠️ Stack Tecnológico Principal</h2>
+                      <div style="display:flex; flex-wrap:wrap; gap:32px; justify-content:center;">
+                        <div style="flex:1 1 220px; min-width:180px; max-width:260px; background:var(--glass); border-radius:18px; box-shadow:var(--card-shadow); padding:20px 12px; margin-bottom:18px; text-align:center;">
+                          <div style="font-size:2em;">⚛️</div>
+                          <h4 style="margin:10px 0 8px 0;">React Native</h4>
+                          <div style="font-size:0.98em;">Framework móvil multiplataforma</div>
+                          <div style="margin-top:8px;"><a href="https://reactnative.dev/" target="_blank" class="btn small-btn secondary-btn">Docs</a></div>
+                        </div>
+                        <div style="flex:1 1 220px; min-width:180px; max-width:260px; background:var(--glass); border-radius:18px; box-shadow:var(--card-shadow); padding:20px 12px; margin-bottom:18px; text-align:center;">
+                          <div style="font-size:2em;">📦</div>
+                          <h4 style="margin:10px 0 8px 0;">Expo</h4>
+                          <div style="font-size:0.98em;">Plataforma de build y APIs nativas</div>
+                          <div style="margin-top:8px;"><a href="https://docs.expo.dev/" target="_blank" class="btn small-btn secondary-btn">Docs</a></div>
+                        </div>
+                        <div style="flex:1 1 220px; min-width:180px; max-width:260px; background:var(--glass); border-radius:18px; box-shadow:var(--card-shadow); padding:20px 12px; margin-bottom:18px; text-align:center;">
+                          <div style="font-size:2em;">🔷</div>
+                          <h4 style="margin:10px 0 8px 0;">TypeScript</h4>
+                          <div style="font-size:0.98em;">Tipado estático y seguro</div>
+                          <div style="margin-top:8px;"><a href="https://www.typescriptlang.org/docs/" target="_blank" class="btn small-btn secondary-btn">Docs</a></div>
+                        </div>
+                        <div style="flex:1 1 220px; min-width:180px; max-width:260px; background:var(--glass); border-radius:18px; box-shadow:var(--card-shadow); padding:20px 12px; margin-bottom:18px; text-align:center;">
+                          <div style="font-size:2em;">🗃️</div>
+                          <h4 style="margin:10px 0 8px 0;">Redux Toolkit</h4>
+                          <div style="font-size:0.98em;">Gestión de estado global</div>
+                          <div style="margin-top:8px;"><a href="https://redux-toolkit.js.org/" target="_blank" class="btn small-btn secondary-btn">Docs</a></div>
+                        </div>
+                        <div style="flex:1 1 220px; min-width:180px; max-width:260px; background:var(--glass); border-radius:18px; box-shadow:var(--card-shadow); padding:20px 12px; margin-bottom:18px; text-align:center;">
+                          <div style="font-size:2em;">🧭</div>
+                          <h4 style="margin:10px 0 8px 0;">React Navigation</h4>
+                          <div style="font-size:0.98em;">Navegación stack, tabs, drawer</div>
+                          <div style="margin-top:8px;"><a href="https://reactnavigation.org/docs/getting-started" target="_blank" class="btn small-btn secondary-btn">Docs</a></div>
+                        </div>
+                        <div style="flex:1 1 220px; min-width:180px; max-width:260px; background:var(--glass); border-radius:18px; box-shadow:var(--card-shadow); padding:20px 12px; margin-bottom:18px; text-align:center;">
+                          <div style="font-size:2em;">🟦</div>
+                          <h4 style="margin:10px 0 8px 0;">Socket.io</h4>
+                          <div style="font-size:0.98em;">Comunicación en tiempo real</div>
+                          <div style="margin-top:8px;"><a href="https://socket.io/docs/v4/client-api/" target="_blank" class="btn small-btn secondary-btn">Docs</a></div>
+                        </div>
+                      </div>
                     </div>
-                </div>
-            </div>
-        </section>
+                    <div class="glass-card" style="margin-bottom:32px;">
+                      <h3 class="section-title">📚 Tabla de Tecnologías Principales</h3>
+                      <div style="overflow-x:auto;">
+                    <table class="api-table">
+                      <thead>
+                        <tr><th>Tecnología</th><th>Versión</th><th>Propósito</th></tr>
+                      </thead>
+                      <tbody>
+                        <tr><td>React Native</td><td>0.76.7</td><td>Framework móvil multiplataforma</td></tr>
+                        <tr><td>Expo</td><td>~52.0.38</td><td>Plataforma de desarrollo y build</td></tr>
+                        <tr><td>TypeScript</td><td>^5.3.3</td><td>Tipado estático</td></tr>
+                        <tr><td>Redux Toolkit</td><td>^2.8.2</td><td>Gestión de estado global</td></tr>
+                        <tr><td>React Navigation</td><td>^7.x</td><td>Navegación stack, tabs, drawer</td></tr>
+                        <tr><td>Socket.io</td><td>^4.8.1</td><td>Comunicación en tiempo real</td></tr>
+                        <tr><td>Firebase Firestore</td><td>-</td><td>Base de datos en la nube</td></tr>
+                        <tr><td>Lottie</td><td>-</td><td>Animaciones</td></tr>
+                        <tr><td>Axios</td><td>^1.8.4</td><td>Cliente HTTP para APIs</td></tr>
+                        <tr><td>Expo Vector Icons</td><td>^14.0.2</td><td>Iconografía</td></tr>
+                        <tr><td>Expo Linear Gradient</td><td>~14.0.2</td><td>Gradientes visuales</td></tr>
+                        <tr><td>Expo Blur</td><td>^14.1.5</td><td>Efectos de desenfoque</td></tr>
+                        <tr><td>React Native Maps</td><td>1.18.0</td><td>Mapas y geolocalización</td></tr>
+                        <tr><td>Expo Location</td><td>^18.1.6</td><td>Acceso a ubicación</td></tr>
+                        <tr><td>Expo Image Picker</td><td>^16.0.6</td><td>Selección de imágenes</td></tr>
+                        <tr><td>Expo AV</td><td>^15.1.7</td><td>Audio y video</td></tr>
+                        <tr><td>i18next</td><td>^25.3.2</td><td>Internacionalización</td></tr>
+                        <tr><td>Formik</td><td>^2.4.6</td><td>Formularios</td></tr>
+                        <tr><td>Yup</td><td>^1.6.1</td><td>Validación de formularios</td></tr>
+                        <tr><td>Lodash</td><td>^4.17.21</td><td>Utilidades JS</td></tr>
+                        <tr><td>Babel</td><td>^7.25.2</td><td>Transpilación</td></tr>
+                        <tr><td>Metro Bundler</td><td>-</td><td>Empaquetador de React Native</td></tr>
+                        <tr><td>Expo Updates</td><td>^0.27.4</td><td>Actualizaciones OTA</td></tr>
+                      </tbody>
+                    </table>
+                      </div>
+                    </div>
+                    <div class="glass-card" style="margin-bottom:32px;">
+                      <h3 class="section-title">🔑 Dependencias Clave y Utilidades</h3>
+                      <ul>
+                        <li>🎨 <b>Expo Vector Icons, Linear Gradient, Blur:</b> UI moderna y visual</li>
+                        <li>🗺️ <b>React Native Maps, Expo Location:</b> Mapas, geolocalización, rutas</li>
+                        <li>📝 <b>Formik, Yup:</b> Formularios y validación</li>
+                        <li>🧰 <b>Lodash:</b> Utilidades JS</li>
+                    </ul>
+                    </div>
+                    <div class="glass-card" style="margin-bottom:32px;">
+                      <h3 class="section-title">🧪 Herramientas de Desarrollo y Testing</h3>
+                      <ul>
+                        <li>⚡ <b>Babel, Metro Bundler:</b> Transpilación y empaquetado</li>
+                        <li>🧪 <b>Jest, React Native Testing Library:</b> Testing unitario y de integración</li>
+                        <li>🔄 <b>Expo Updates:</b> Actualizaciones OTA</li>
+                    </ul>
+                    </div>
+                    <div class="glass-card" style="margin-bottom:32px;">
+                      <h3 class="section-title">🖥️ Requisitos Mínimos y Compatibilidad</h3>
+                      <ul>
+                        <li>🟩 <b>Node.js:</b> Mínimo 16.x, recomendado 18.x+</li>
+                        <li>🍏 <b>iOS:</b> 13.0+ &nbsp; | &nbsp; 🤖 <b>Android:</b> API 21+ &nbsp; | &nbsp; 🌐 <b>Web:</b> Navegadores modernos</li>
+                        <li>⚡ <b>Optimización:</b> lazy loading, memoización, bundle splitting, carga &lt; 3s, memoria &lt; 200MB</li>
+                    </ul>
+                    </div>
+                    <div class="glass-card" style="margin-bottom:12px; text-align:center;">
+                      <h4 style="margin-bottom:10px;">🌐 Accesos Rápidos a Documentación Oficial</h4>
+                      <div style="display:flex; flex-wrap:wrap; gap:12px; justify-content:center;">
+                        <a href="https://reactnative.dev/" target="_blank" class="btn small-btn primary-btn">⚛️ React Native</a>
+                        <a href="https://docs.expo.dev/" target="_blank" class="btn small-btn secondary-btn">📦 Expo</a>
+                        <a href="https://www.typescriptlang.org/docs/" target="_blank" class="btn small-btn primary-btn">🔷 TypeScript</a>
+                        <a href="https://redux-toolkit.js.org/" target="_blank" class="btn small-btn secondary-btn">🗃️ Redux Toolkit</a>
+                        <a href="https://reactnavigation.org/docs/getting-started" target="_blank" class="btn small-btn primary-btn">🧭 React Navigation</a>
+                        <a href="https://socket.io/docs/v4/client-api/" target="_blank" class="btn small-btn secondary-btn">🟦 Socket.io</a>
+                      </div>
+                    </div>
+                    <p style="text-align:center; margin-top:18px;"><span class="last-updated"></span></p>
+                  </div>
+                  <div id="tab-uiux" class="tab-content">
+                    <div class="glass-card" style="margin-bottom:32px;">
+                      <h2 class="section-title" style="font-size:2em;">🎨 Principios de Diseño y UI/UX</h2>
+                      <div style="display:flex; flex-wrap:wrap; gap:32px; justify-content:center;">
+                        <div style="flex:1 1 220px; min-width:180px; max-width:260px; background:var(--glass); border-radius:18px; box-shadow:var(--card-shadow); padding:20px 12px; margin-bottom:18px; text-align:center;">
+                          <div style="font-size:2em;">🧑‍🎨</div>
+                          <h4 style="margin:10px 0 8px 0;">Consistencia Visual</h4>
+                          <div style="font-size:0.98em;">Sistema de diseño basado en tokens y temas claros/oscuro</div>
+                        </div>
+                        <div style="flex:1 1 220px; min-width:180px; max-width:260px; background:var(--glass); border-radius:18px; box-shadow:var(--card-shadow); padding:20px 12px; margin-bottom:18px; text-align:center;">
+                          <div style="font-size:2em;">📱</div>
+                          <h4 style="margin:10px 0 8px 0;">Mobile First</h4>
+                          <div style="font-size:0.98em;">Diseño responsivo y adaptado a cualquier dispositivo</div>
+                        </div>
+                        <div style="flex:1 1 220px; min-width:180px; max-width:260px; background:var(--glass); border-radius:18px; box-shadow:var(--card-shadow); padding:20px 12px; margin-bottom:18px; text-align:center;">
+                          <div style="font-size:2em;">⚡</div>
+                          <h4 style="margin:10px 0 8px 0;">Feedback Inmediato</h4>
+                          <div style="font-size:0.98em;">Animaciones, loaders y notificaciones visuales</div>
+                        </div>
+                        <div style="flex:1 1 220px; min-width:180px; max-width:260px; background:var(--glass); border-radius:18px; box-shadow:var(--card-shadow); padding:20px 12px; margin-bottom:18px; text-align:center;">
+                          <div style="font-size:2em;">🧩</div>
+                          <h4 style="margin:10px 0 8px 0;">Componentes Reutilizables</h4>
+                          <div style="font-size:0.98em;">Botones, inputs, cards, listas, modales, toasts, etc.</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="glass-card" style="margin-bottom:32px;">
+                      <h3 class="section-title">🖌️ Sistema de Diseño</h3>
+                      <ul>
+                        <li>🎨 <b>Design Tokens:</b> Colores, tipografías, espaciado, bordes, sombras, animaciones.</li>
+                        <li>🌗 <b>Temas:</b> Claro/oscuro, responsive, adaptable a diferentes dispositivos.</li>
+                        <li>🧩 <b>Componentes:</b> Botones, inputs, tarjetas, listas, modales, toasts, etc.</li>
+                    </ul>
+                  </div>
+                    <div class="glass-card" style="margin-bottom:32px;">
+                      <h3 class="section-title">🧱 Componentes Clave</h3>
+                      <ul>
+                        <li>🔘 <b>Button:</b> Botones primarios, secundarios, de acción, de deshacer, de cerrar.</li>
+                        <li>🔤 <b>Input:</b> Texto, números, email, contraseña, búsqueda, selección de fecha.</li>
+                        <li>🃏 <b>Card:</b> Tarjetas de información, de acción, de notificación, de usuario.</li>
+                        <li>📋 <b>List:</b> Listas simples, listas con iconos, listas con acciones.</li>
+                        <li> <b>Modal:</b> Ventanas modales, diálogos, confirmaciones, alertas.</li>
+                        <li>🔔 <b>Toast:</b> Notificaciones de estado, mensajes de éxito, error, advertencia.</li>
+                        <li>⏳ <b>Loading:</b> Indicadores de carga, spinners, skeletons.</li>
+                        <li>🛡️ <b>Error Boundary:</b> Manejo de errores en componentes.</li>
+                    </ul>
+                    </div>
+                    <div class="glass-card" style="margin-bottom:32px;">
+                      <h3 class="section-title">🌐 Accesos Rápidos a Docs de UI/UX</h3>
+                      <div style="display:flex; flex-wrap:wrap; gap:12px; justify-content:center;">
+                        <a href="src/docs-uiux.html" target="_blank" class="btn small-btn primary-btn">🎨 Docs UI/UX</a>
+                        <a href="src/docs-componentes.html" target="_blank" class="btn small-btn secondary-btn"> Docs Componentes</a>
+                        <a href="src/docs-design-system.html" target="_blank" class="btn small-btn primary-btn">🖌️ Design System</a>
+                      </div>
+                    </div>
+                    <p style="text-align:center; margin-top:18px;"><span class="last-updated"></span></p>
+                  </div>
+                  <div id="tab-core" class="tab-content">
+                    <div class="glass-card" style="margin-bottom:32px;">
+                      <h2 class="section-title" style="font-size:2em;">⚙️ Funcionalidades Core</h2>
+                      <div style="display:flex; flex-wrap:wrap; gap:32px; justify-content:center;">
+                        <div style="flex:1 1 220px; min-width:180px; max-width:260px; background:var(--glass); border-radius:18px; box-shadow:var(--card-shadow); padding:20px 12px; margin-bottom:18px; text-align:center;">
+                          <div style="font-size:2em;">🔐</div>
+                          <h4 style="margin:10px 0 8px 0;">Autenticación</h4>
+                          <div style="font-size:0.98em;">Login, registro, JWT, persistencia de sesión</div>
+                        </div>
+                        <div style="flex:1 1 220px; min-width:180px; max-width:260px; background:var(--glass); border-radius:18px; box-shadow:var(--card-shadow); padding:20px 12px; margin-bottom:18px; text-align:center;">
+                          <div style="font-size:2em;">🎸</div>
+                          <h4 style="margin:10px 0 8px 0;">Búsqueda de Músicos</h4>
+                          <div style="font-size:0.98em;">Filtrado por instrumento y ubicación</div>
+                        </div>
+                        <div style="flex:1 1 220px; min-width:180px; max-width:260px; background:var(--glass); border-radius:18px; box-shadow:var(--card-shadow); padding:20px 12px; margin-bottom:18px; text-align:center;">
+                          <div style="font-size:2em;">🎤</div>
+                          <h4 style="margin:10px 0 8px 0;">Gestión de Eventos</h4>
+                          <div style="font-size:0.98em;">Crear, editar, invitar, agendar eventos musicales</div>
+                        </div>
+                        <div style="flex:1 1 220px; min-width:180px; max-width:260px; background:var(--glass); border-radius:18px; box-shadow:var(--card-shadow); padding:20px 12px; margin-bottom:18px; text-align:center;">
+                          <div style="font-size:2em;">💬</div>
+                          <h4 style="margin:10px 0 8px 0;">Chat en Tiempo Real</h4>
+                          <div style="font-size:0.98em;">Mensajería instantánea con Socket.io</div>
+                        </div>
+                        <div style="flex:1 1 220px; min-width:180px; max-width:260px; background:var(--glass); border-radius:18px; box-shadow:var(--card-shadow); padding:20px 12px; margin-bottom:18px; text-align:center;">
+                          <div style="font-size:2em;">🔔</div>
+                          <h4 style="margin:10px 0 8px 0;">Notificaciones</h4>
+                          <div style="font-size:0.98em;">Push y en-app, feedback inmediato</div>
+                        </div>
+                        <div style="flex:1 1 220px; min-width:180px; max-width:260px; background:var(--glass); border-radius:18px; box-shadow:var(--card-shadow); padding:20px 12px; margin-bottom:18px; text-align:center;">
+                          <div style="font-size:2em;">🗺️</div>
+                          <h4 style="margin:10px 0 8px 0;">Mapas Interactivos</h4>
+                          <div style="font-size:0.98em;">Visualización de músicos y eventos en tu área</div>
+                        </div>
+                        <div style="flex:1 1 220px; min-width:180px; max-width:260px; background:var(--glass); border-radius:18px; box-shadow:var(--card-shadow); padding:20px 12px; margin-bottom:18px; text-align:center;">
+                          <div style="font-size:2em;">👤</div>
+                          <h4 style="margin:10px 0 8px 0;">Perfiles y Calificaciones</h4>
+                          <div style="font-size:0.98em;">Perfiles personalizados y sistema de rating</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="glass-card" style="margin-bottom:32px;">
+                      <h3 class="section-title">🔄 Flujos Clave</h3>
+                      <ul>
+                        <li>🔑 <b>Autenticación:</b> Registro, login, persistencia</li>
+                        <li>🎯 <b>Solicitud de Músico:</b> Matching tipo Uber</li>
+                        <li>📅 <b>Gestión de Eventos:</b> Crear, agendar, invitar</li>
+                        <li>💬 <b>Chat y Notificaciones:</b> Comunicación instantánea</li>
+                    </ul>
+                    </div>
+                    <div class="glass-card" style="margin-bottom:32px;">
+                      <h3 class="section-title">🛣️ Ejemplo de Flujo de Solicitud de Músico</h3>
+                    <pre><code class="language-mermaid">graph TD;
+  Usuario --> Login
+  Login --> Home
+  Home --> SolicitarMusico
+  SolicitarMusico --> Matching
+  Matching --> NotificacionMusico
+  NotificacionMusico --> Chat
+  Chat --> EventoAgendado
+</code></pre>
+                    </div>
+                    <div class="glass-card" style="margin-bottom:32px;">
+                      <h3 class="section-title">🧩 Componentes y APIs Relacionados</h3>
+                    <ul>
+                        <li>🗂️ <b>Componentes:</b> <code>EventList</code>, <code>RequestList</code>, <code>ShareMusician</code>, <code>AlertModal</code>, <code>SocketConnectButton</code></li>
+                        <li>🔗 <b>APIs:</b> <code>/auth/*</code>, <code>/events/*</code>, <code>/musicians/*</code>, <code>/notifications/*</code></li>
+                    </ul>
+                    </div>
+                    <div class="glass-card" style="margin-bottom:32px;">
+                      <h3 class="section-title">🌐 Accesos Rápidos</h3>
+                      <div style="display:flex; flex-wrap:wrap; gap:12px; justify-content:center;">
+                        <a href="src/docs-core.html" target="_blank" class="btn small-btn primary-btn">⚙️ Docs Funcionalidades Core</a>
+                        <a href="#tab-uiux" onclick="showTab('uiux')" class="btn small-btn secondary-btn">🎨 UI/UX</a>
+                        <a href="#tab-arquitectura" onclick="showTab('arquitectura')" class="btn small-btn primary-btn">🏗️ Arquitectura</a>
+                      </div>
+                    </div>
+                    <p style="text-align:center; margin-top:18px;"><span class="last-updated"></span></p>
+                  </div>
+                  <div id="tab-pantallas" class="tab-content">
+                    <div class="glass-card" style="margin-bottom:32px;">
+                      <h2 class="section-title" style="font-size:2em;">��️ Pantallas y Navegación</h2>
+                      <div style="display:flex; flex-wrap:wrap; gap:32px; justify-content:center;">
+                        <div style="flex:1 1 220px; min-width:180px; max-width:260px; background:var(--glass); border-radius:18px; box-shadow:var(--card-shadow); padding:20px 12px; margin-bottom:18px; text-align:center;">
+                          <div style="font-size:2em;">🔑</div>
+                          <h4 style="margin:10px 0 8px 0;">Login / Registro</h4>
+                          <div style="font-size:0.98em;">Acceso seguro y registro de usuarios</div>
+                        </div>
+                        <div style="flex:1 1 220px; min-width:180px; max-width:260px; background:var(--glass); border-radius:18px; box-shadow:var(--card-shadow); padding:20px 12px; margin-bottom:18px; text-align:center;">
+                          <div style="font-size:2em;">🏠</div>
+                          <h4 style="margin:10px 0 8px 0;">Home / Dashboard</h4>
+                          <div style="font-size:0.98em;">Vista principal y acceso a funcionalidades</div>
+                        </div>
+                        <div style="flex:1 1 220px; min-width:180px; max-width:260px; background:var(--glass); border-radius:18px; box-shadow:var(--card-shadow); padding:20px 12px; margin-bottom:18px; text-align:center;">
+                          <div style="font-size:2em;">🔍</div>
+                          <h4 style="margin:10px 0 8px 0;">Buscar Músicos</h4>
+                          <div style="font-size:0.98em;">Filtrado y exploración de músicos</div>
+                        </div>
+                        <div style="flex:1 1 220px; min-width:180px; max-width:260px; background:var(--glass); border-radius:18px; box-shadow:var(--card-shadow); padding:20px 12px; margin-bottom:18px; text-align:center;">
+                          <div style="font-size:2em;">📋</div>
+                          <h4 style="margin:10px 0 8px 0;">Mis Solicitudes</h4>
+                          <div style="font-size:0.98em;">Gestión centralizada de solicitudes y eventos</div>
+                        </div>
+                        <div style="flex:1 1 220px; min-width:180px; max-width:260px; background:var(--glass); border-radius:18px; box-shadow:var(--card-shadow); padding:20px 12px; margin-bottom:18px; text-align:center;">
+                          <div style="font-size:2em;">🎫</div>
+                          <h4 style="margin:10px 0 8px 0;">Eventos</h4>
+                          <div style="font-size:0.98em;">Listado y gestión de eventos musicales</div>
+                        </div>
+                        <div style="flex:1 1 220px; min-width:180px; max-width:260px; background:var(--glass); border-radius:18px; box-shadow:var(--card-shadow); padding:20px 12px; margin-bottom:18px; text-align:center;">
+                          <div style="font-size:2em;">💬</div>
+                          <h4 style="margin:10px 0 8px 0;">Chat</h4>
+                          <div style="font-size:0.98em;">Mensajería instantánea y comunicación</div>
+                        </div>
+                        <div style="flex:1 1 220px; min-width:180px; max-width:260px; background:var(--glass); border-radius:18px; box-shadow:var(--card-shadow); padding:20px 12px; margin-bottom:18px; text-align:center;">
+                          <div style="font-size:2em;">👤</div>
+                          <h4 style="margin:10px 0 8px 0;">Perfil</h4>
+                          <div style="font-size:0.98em;">Gestión de información y preferencias</div>
+                        </div>
+                        <div style="flex:1 1 220px; min-width:180px; max-width:260px; background:var(--glass); border-radius:18px; box-shadow:var(--card-shadow); padding:20px 12px; margin-bottom:18px; text-align:center;">
+                          <div style="font-size:2em;">⚙️</div>
+                          <h4 style="margin:10px 0 8px 0;">Configuración</h4>
+                          <div style="font-size:0.98em;">Ajustes de idioma, tema y notificaciones</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="glass-card" style="margin-bottom:32px;">
+                      <h3 class="section-title">🧭 Navegación</h3>
+                      <ul>
+                        <li>🗂️ <b>Stack Navigator:</b> Flujos principales</li>
+                        <li>🔲 <b>Tab Navigator:</b> Acceso rápido a secciones clave</li>
+                        <li>📑 <b>Drawer Navigator:</b> Menú lateral</li>
+                        <li>🔗 <b>Deep Linking:</b> Enlaces directos a pantallas</li>
+                    </ul>
+                    </div>
+                    <div class="glass-card" style="margin-bottom:32px;">
+                      <h3 class="section-title">🗺️ Diagrama de Navegación</h3>
+                      <pre><code class="language-mermaid">graph TD;
+  Login --> Home
+  Home --> BuscarMusicos
+  Home --> MisSolicitudes
+  Home --> Eventos
+  Home --> Perfil
+  Home --> Configuracion
+  MisSolicitudes --> EventList
+  Eventos --> EventList
+  BuscarMusicos --> MusicianList
+  Perfil --> EditProfile
+  Home --> Chat
+</code></pre>
+                    </div>
+                    <div class="glass-card" style="margin-bottom:32px;">
+                      <h3 class="section-title">🌐 Accesos Rápidos</h3>
+                      <div style="display:flex; flex-wrap:wrap; gap:12px; justify-content:center;">
+                        <a href="src/docs-pantallas.html" target="_blank" class="btn small-btn primary-btn">🗺️ Docs Pantallas y Navegación</a>
+                        <a href="#tab-core" onclick="showTab('core')" class="btn small-btn secondary-btn">⚙️ Funcionalidades Core</a>
+                        <a href="#tab-uiux" onclick="showTab('uiux')" class="btn small-btn primary-btn">🎨 UI/UX</a>
+                      </div>
+                    </div>
+                    <p style="text-align:center; margin-top:18px;"><span class="last-updated"></span></p>
+                  </div>
+                  <div id="tab-api" class="tab-content">
+                    <div class="glass-card" style="margin-bottom:32px;">
+                      <h2 class="section-title" style="font-size:2em;">🔗 APIs y Servicios</h2>
+                      <div style="display:flex; flex-wrap:wrap; gap:32px; justify-content:center;">
+                        <div style="flex:1 1 220px; min-width:180px; max-width:260px; background:var(--glass); border-radius:18px; box-shadow:var(--card-shadow); padding:20px 12px; margin-bottom:18px; text-align:center;">
+                          <div style="font-size:2em;">🔑</div>
+                          <h4 style="margin:10px 0 8px 0;">/auth/*</h4>
+                          <div style="font-size:0.98em;">Autenticación y gestión de usuarios</div>
+                        </div>
+                        <div style="flex:1 1 220px; min-width:180px; max-width:260px; background:var(--glass); border-radius:18px; box-shadow:var(--card-shadow); padding:20px 12px; margin-bottom:18px; text-align:center;">
+                          <div style="font-size:2em;">🎫</div>
+                          <h4 style="margin:10px 0 8px 0;">/events/*</h4>
+                          <div style="font-size:0.98em;">Gestión de eventos musicales</div>
+                        </div>
+                        <div style="flex:1 1 220px; min-width:180px; max-width:260px; background:var(--glass); border-radius:18px; box-shadow:var(--card-shadow); padding:20px 12px; margin-bottom:18px; text-align:center;">
+                          <div style="font-size:2em;">🎸</div>
+                          <h4 style="margin:10px 0 8px 0;">/musicians/*</h4>
+                          <div style="font-size:0.98em;">Gestión de músicos</div>
+                        </div>
+                        <div style="flex:1 1 220px; min-width:180px; max-width:260px; background:var(--glass); border-radius:18px; box-shadow:var(--card-shadow); padding:20px 12px; margin-bottom:18px; text-align:center;">
+                          <div style="font-size:2em;">🔔</div>
+                          <h4 style="margin:10px 0 8px 0;">/notifications/*</h4>
+                          <div style="font-size:0.98em;">Notificaciones push y en-app</div>
+                        </div>
+                        <div style="flex:1 1 220px; min-width:180px; max-width:260px; background:var(--glass); border-radius:18px; box-shadow:var(--card-shadow); padding:20px 12px; margin-bottom:18px; text-align:center;">
+                          <div style="font-size:2em;">🗂️</div>
+                          <h4 style="margin:10px 0 8px 0;">/media/*</h4>
+                          <div style="font-size:0.98em;">Subida y gestión de archivos</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="glass-card" style="margin-bottom:32px;">
+                      <h3 class="section-title">🛠️ Servicios Clave</h3>
+                      <ul>
+                        <li>🔒 <b>Autenticación JWT</b></li>
+                        <li>💬 <b>Socket.io</b> para chat y notificaciones</li>
+                        <li>🌐 <b>RESTful API</b> para eventos y usuarios</li>
+                        <li>🗄️ <b>Almacenamiento seguro</b> de archivos</li>
+                    </ul>
+                  </div>
+                    <div class="glass-card" style="margin-bottom:32px;">
+                      <h3 class="section-title">📦 Ejemplo de Request/Response</h3>
+                      <pre><code class="language-bash"># Login
+curl -X POST https://api.mussikon.com/auth/login \
+  -H "Content-Type: application/json" \
+  -d '{"userEmail": "juan@example.com", "userPassword": "Password*123"}'
 
-        <section id="about-intro" class="section-padding bg-light">
-            <div class="container text-center">
-                <h2>¿Quiénes Somos?</h2>
-                <p>En Mussikon, la pasión por la música es nuestro motor. Con años de experiencia, nos dedicamos a ofrecer instrumentos de la más alta calidad y servicios excepcionales para músicos de todos los niveles. Creemos que la música transforma vidas, y estamos aquí para acompañarte en tu viaje sonoro.</p>
-                <a href="about.html" class="btn primary-btn">Conoce Más Sobre Nosotros</a>
-            </div>
-        </section>
+# Respuesta
+{
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6...",
+  "user": { "id": 1, "name": "Juan" }
+}
+                      </code></pre>
+                  </div>
+                    <div class="glass-card" style="margin-bottom:32px;">
+                      <h3 class="section-title">📑 Swagger y Documentación</h3>
+                      <a href="/api-docs" target="_blank" class="btn primary-btn">Ver Swagger API Docs</a>
+                  </div>
+                    <div class="glass-card" style="margin-bottom:32px;">
+                      <h3 class="section-title"> Accesos Rápidos</h3>
+                      <div style="display:flex; flex-wrap:wrap; gap:12px; justify-content:center;">
+                        <a href="src/docs-api.html" target="_blank" class="btn small-btn primary-btn">🔗 Docs APIs y Servicios</a>
+                        <a href="#tab-pantallas" onclick="showTab('pantallas')" class="btn small-btn secondary-btn">🗺️ Pantallas</a>
+                        <a href="#tab-core" onclick="showTab('core')" class="btn small-btn primary-btn">⚙️ Funcionalidades Core</a>
+                      </div>
+                    </div>
+                    <p style="text-align:center; margin-top:18px;"><span class="last-updated"></span></p>
+                  </div>
+                  <div id="tab-estado" class="tab-content">
+                    <div class="glass-card" style="margin-bottom:32px;">
+                      <h2 class="section-title" style="font-size:2em;">📊 Estado Actual</h2>
+                      <div style="display:flex; flex-wrap:wrap; gap:32px; justify-content:center;">
+                        <div style="flex:1 1 260px; min-width:200px; max-width:320px; background:var(--glass); border-radius:18px; box-shadow:var(--card-shadow); padding:24px 18px; margin-bottom:18px; text-align:center;">
+                          <div style="font-size:2.2em;">📝</div>
+                          <h4 style="margin:12px 0 8px 0;">Resumen Ejecutivo</h4>
+                          <div style="font-size:0.98em;">Proyecto en fase avanzada, arquitectura moderna y funcionalidades core casi completas.</div>
+                        </div>
+                        <div style="flex:1 1 260px; min-width:200px; max-width:320px; background:var(--glass); border-radius:18px; box-shadow:var(--card-shadow); padding:24px 18px; margin-bottom:18px; text-align:center;">
+                          <div style="font-size:2.2em;">📈</div>
+                          <h4 style="margin:12px 0 8px 0;">Métricas</h4>
+                          <ul style="text-align:left; font-size:0.98em;">
+                            <li>✅ <b>Cobertura de código:</b> 85%</li>
+                            <li>🚀 <b>Tecnologías implementadas:</b> 95%</li>
+                            <li>🏗️ <b>Arquitectura:</b> 100% completada</li>
+                            <li>⚙️ <b>Funcionalidades core:</b> 90% completadas</li>
+                            <li>🌟 <b>Calidad de código:</b> 9/10</li>
+                          </ul>
+                        </div>
+                        <div style="flex:1 1 260px; min-width:200px; max-width:320px; background:var(--glass); border-radius:18px; box-shadow:var(--card-shadow); padding:24px 18px; margin-bottom:18px; text-align:center;">
+                          <div style="font-size:2.2em;">✅</div>
+                          <h4 style="margin:12px 0 8px 0;">Completado</h4>
+                          <ul style="text-align:left; font-size:0.98em;">
+                            <li>🔐 Autenticación y registro</li>
+                            <li>🎫 Gestión de eventos y solicitudes</li>
+                            <li>💬 Chat en tiempo real</li>
+                            <li>🔔 Notificaciones push</li>
+                            <li>🗺️ Mapas interactivos</li>
+                            <li>👤 Perfiles de usuario</li>
+                          </ul>
+                        </div>
+                        <div style="flex:1 1 260px; min-width:200px; max-width:320px; background:var(--glass); border-radius:18px; box-shadow:var(--card-shadow); padding:24px 18px; margin-bottom:18px; text-align:center;">
+                          <div style="font-size:2.2em;">🚧</div>
+                          <h4 style="margin:12px 0 8px 0;">En Desarrollo</h4>
+                          <ul style="text-align:left; font-size:0.98em;">
+                            <li>🛠️ Panel de administración</li>
+                            <li>🎨 Mejoras de UI/UX</li>
+                            <li>⚡ Optimización de performance</li>
+                          </ul>
+                        </div>
+                        <div style="flex:1 1 260px; min-width:200px; max-width:320px; background:var(--glass); border-radius:18px; box-shadow:var(--card-shadow); padding:24px 18px; margin-bottom:18px; text-align:center;">
+                          <div style="font-size:2.2em;">⏳</div>
+                          <h4 style="margin:12px 0 8px 0;">Pendiente</h4>
+                          <ul style="text-align:left; font-size:0.98em;">
+                            <li>🧪 Automatización de pruebas E2E</li>
+                            <li>📚 Documentación avanzada</li>
+                          </ul>
+                        </div>
+                        <div style="flex:1 1 260px; min-width:200px; max-width:320px; background:var(--glass); border-radius:18px; box-shadow:var(--card-shadow); padding:24px 18px; margin-bottom:18px; text-align:center;">
+                          <div style="font-size:2.2em;">🌟</div>
+                          <h4 style="margin:12px 0 8px 0;">Calidad de Código</h4>
+                          <ul style="text-align:left; font-size:0.98em;">
+                            <li>📐 Convenciones de TypeScript</li>
+                            <li>🧩 Componentes tipados</li>
+                            <li>🧪 Tests unitarios y de integración</li>
+                            <li>📖 Documentación actualizada</li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="glass-card" style="margin-bottom:32px;">
+                      <h3 class="section-title">🌐 Accesos Rápidos</h3>
+                      <div style="display:flex; flex-wrap:wrap; gap:12px; justify-content:center;">
+                        <a href="src/docs-estado.html" target="_blank" class="btn small-btn primary-btn">📊 Docs Estado Actual</a>
+                        <a href="#tab-api" onclick="showTab('api')" class="btn small-btn secondary-btn">🔗 APIs y Servicios</a>
+                        <a href="#tab-pantallas" onclick="showTab('pantallas')" class="btn small-btn primary-btn">🗺️ Pantallas</a>
+                      </div>
+                    </div>
+                    <p style="text-align:center; margin-top:18px;"><span class="last-updated"></span></p>
+                  </div>
+                  <div id="tab-i18n" class="tab-content">
+                    <div class="glass-card" style="margin-bottom:32px;">
+                      <h2 class="section-title" style="font-size:2em;">🌍 Internacionalización (i18n)</h2>
+                      <div style="display:flex; flex-wrap:wrap; gap:32px; justify-content:center;">
+                        <div style="flex:1 1 260px; min-width:200px; max-width:320px; background:var(--glass); border-radius:18px; box-shadow:var(--card-shadow); padding:24px 18px; margin-bottom:18px; text-align:center;">
+                          <div style="font-size:2.2em;">🗣️</div>
+                          <h4 style="margin:12px 0 8px 0;">Soporte de Idiomas</h4>
+                          <ul style="text-align:left; font-size:0.98em;">
+                            <li>🇪🇸 Español (por defecto)</li>
+                            <li>🇬🇧 Inglés</li>
+                            <li>🌐 Fácil de expandir a otros idiomas</li>
+                          </ul>
+                        </div>
+                        <div style="flex:1 1 260px; min-width:200px; max-width:320px; background:var(--glass); border-radius:18px; box-shadow:var(--card-shadow); padding:24px 18px; margin-bottom:18px; text-align:center;">
+                          <div style="font-size:2.2em;">⚙️</div>
+                          <h4 style="margin:12px 0 8px 0;">Configuración</h4>
+                          <ul style="text-align:left; font-size:0.98em;">
+                            <li>🌍 Selector de idioma en configuración</li>
+                            <li>💾 Persistencia del idioma seleccionado</li>
+                            <li>📱 Detección automática del idioma del dispositivo</li>
+                          </ul>
+                        </div>
+                        <div style="flex:1 1 260px; min-width:200px; max-width:320px; background:var(--glass); border-radius:18px; box-shadow:var(--card-shadow); padding:24px 18px; margin-bottom:18px; text-align:center;">
+                          <div style="font-size:2.2em;">💡</div>
+                          <h4 style="margin:12px 0 8px 0;">Ejemplo de Uso</h4>
+                          <pre class="code-block" style="text-align:left;"><code class="language-ts">import { useTranslation } from 'react-i18next';
 
-        <section id="testimonials" class="section-padding">
-            <div class="container">
-                <h2>Lo que Dicen Nuestros Clientes</h2>
-                <div class="testimonial-slider">
-                    <div class="testimonial-item">
-                        <p>"Mussikon tiene una selección increíble y el personal es muy conocedor. ¡Encontré mi guitarra soñada aquí!"</p>
-                        <span>- María P., Músico Profesional</span>
+const { t } = useTranslation();
+
+&lt;Text&gt;{t('bienvenido')}&lt;/Text&gt;
+</code></pre>
+                        </div>
+                        <div style="flex:1 1 260px; min-width:200px; max-width:320px; background:var(--glass); border-radius:18px; box-shadow:var(--card-shadow); padding:24px 18px; margin-bottom:18px; text-align:center;">
+                          <div style="font-size:2.2em;">🌟</div>
+                          <h4 style="margin:12px 0 8px 0;">Ventajas</h4>
+                          <ul style="text-align:left; font-size:0.98em;">
+                            <li>🌏 Mejora la experiencia de usuario global</li>
+                            <li>🚀 Facilita la expansión internacional</li>
+                            <li>🎭 Permite personalización cultural</li>
+                          </ul>
+                        </div>
+                      </div>
                     </div>
-                    <div class="testimonial-item">
-                        <p>"Excelente servicio de reparación. Mi violín quedó como nuevo. ¡Totalmente recomendados!"</p>
-                        <span>- Carlos R., Estudiante de Música</span>
+                    <div class="glass-card" style="margin-bottom:32px;">
+                      <h3 class="section-title">🌐 Accesos Rápidos</h3>
+                      <div style="display:flex; flex-wrap:wrap; gap:12px; justify-content:center;">
+                        <a href="src/docs-i18n.html" target="_blank" class="btn small-btn primary-btn">�� Docs Internacionalización</a>
+                        <a href="#tab-estado" onclick="showTab('estado')" class="btn small-btn secondary-btn">📊 Estado Actual</a>
+                        <a href="#tab-api" onclick="showTab('api')" class="btn small-btn primary-btn">🔗 APIs y Servicios</a>
+                      </div>
                     </div>
+                    <p style="text-align:center; margin-top:18px;"><span class="last-updated"></span></p>
+                  </div>
+                  <div id="tab-testing" class="tab-content">
+                    <div class="glass-card" style="margin-bottom:32px;">
+                      <h2 class="section-title" style="font-size:2em;">🧪 Testing y Calidad</h2>
+                      <div style="display:flex; flex-wrap:wrap; gap:32px; justify-content:center;">
+                        <div style="flex:1 1 260px; min-width:200px; max-width:320px; background:var(--glass); border-radius:18px; box-shadow:var(--card-shadow); padding:24px 18px; margin-bottom:18px; text-align:center;">
+                          <div style="font-size:2.2em;">📏</div>
+                          <h4 style="margin:12px 0 8px 0;">Niveles de Testing</h4>
+                          <ul style="text-align:left; font-size:0.98em;">
+                            <li>🧩 Unit Tests: Componentes individuales</li>
+                            <li>🔗 Integration Tests: Servicios y APIs</li>
+                            <li>🚦 E2E Tests: Flujos completos</li>
+                          </ul>
+                        </div>
+                        <div style="flex:1 1 260px; min-width:200px; max-width:320px; background:var(--glass); border-radius:18px; box-shadow:var(--card-shadow); padding:24px 18px; margin-bottom:18px; text-align:center;">
+                          <div style="font-size:2.2em;">🛠️</div>
+                          <h4 style="margin:12px 0 8px 0;">Herramientas</h4>
+                          <ul style="text-align:left; font-size:0.98em;">
+                            <li>🧪 Jest: Framework de testing</li>
+                            <li>📦 React Native Testing Library</li>
+                            <li>🛰️ Mock Service Worker</li>
+                          </ul>
+                        </div>
+                        <div style="flex:1 1 260px; min-width:200px; max-width:320px; background:var(--glass); border-radius:18px; box-shadow:var(--card-shadow); padding:24px 18px; margin-bottom:18px; text-align:center;">
+                          <div style="font-size:2.2em;">💡</div>
+                          <h4 style="margin:12px 0 8px 0;">Ejemplo de Test</h4>
+                          <pre class="code-block" style="text-align:left;"><code class="language-ts">import { render } from '@testing-library/react-native';
+import MyComponent from '../MyComponent';
+
+test('renders correctly', () => {
+  const { getByText } = render(<MyComponent />);
+  expect(getByText('Hola')).toBeTruthy();
+});
+</code></pre>
+                        </div>
+                        <div style="flex:1 1 260px; min-width:200px; max-width:320px; background:var(--glass); border-radius:18px; box-shadow:var(--card-shadow); padding:24px 18px; margin-bottom:18px; text-align:center;">
+                          <div style="font-size:2.2em;">🌟</div>
+                          <h4 style="margin:12px 0 8px 0;">Ventajas</h4>
+                          <ul style="text-align:left; font-size:0.98em;">
+                            <li>✅ Mejora la calidad del código</li>
+                            <li>🛡️ Previene regresiones</li>
+                            <li>🚀 Facilita el refactor y la escalabilidad</li>
+                          </ul>
+                        </div>
+                      </div>
                     </div>
-            </div>
-        </section>
-    </main>
+                    <div class="glass-card" style="margin-bottom:32px;">
+                      <h3 class="section-title">🌐 Accesos Rápidos</h3>
+                      <div style="display:flex; flex-wrap:wrap; gap:12px; justify-content:center;">
+                        <a href="src/docs-testing.html" target="_blank" class="btn small-btn primary-btn">🧪 Docs Testing y Calidad</a>
+                        <a href="#tab-i18n" onclick="showTab('i18n')" class="btn small-btn secondary-btn">🌍 Internacionalización</a>
+                        <a href="#tab-estado" onclick="showTab('estado')" class="btn small-btn primary-btn">📊 Estado Actual</a>
+                      </div>
+                    </div>
+                    <p style="text-align:center; margin-top:18px;"><span class="last-updated"></span></p>
+                  </div>
+                  <div id="tab-deploy" class="tab-content">
+                    <div class="glass-card" style="margin-bottom:32px;">
+                      <h2 class="section-title" style="font-size:2em;">🚀 Despliegue y Build</h2>
+                      <div style="display:flex; flex-wrap:wrap; gap:32px; justify-content:center;">
+                        <div style="flex:1 1 260px; min-width:200px; max-width:320px; background:var(--glass); border-radius:18px; box-shadow:var(--card-shadow); padding:24px 18px; margin-bottom:18px; text-align:center;">
+                          <div style="font-size:2.2em;">🛠️</div>
+                          <h4 style="margin:12px 0 8px 0;">Herramientas</h4>
+                          <ul style="text-align:left; font-size:0.98em;">
+                            <li>⚡ EAS Build: Automatización de builds y despliegue</li>
+                            <li>📱 Expo: Desarrollo y testing multiplataforma</li>
+                            <li>🔄 CI/CD: Integración y despliegue continuo</li>
+                          </ul>
+                        </div>
+                        <div style="flex:1 1 260px; min-width:200px; max-width:320px; background:var(--glass); border-radius:18px; box-shadow:var(--card-shadow); padding:24px 18px; margin-bottom:18px; text-align:center;">
+                          <div style="font-size:2.2em;">💻</div>
+                          <h4 style="margin:12px 0 8px 0;">Comandos Clave</h4>
+                          <pre class="code-block" style="text-align:left;"><code class="language-bash"># Build para Android
+eas build --platform android
+# Build para iOS
+eas build --platform ios
+# Iniciar en modo desarrollo
+npm start
+</code></pre>
+                        </div>
+                        <div style="flex:1 1 260px; min-width:200px; max-width:320px; background:var(--glass); border-radius:18px; box-shadow:var(--card-shadow); padding:24px 18px; margin-bottom:18px; text-align:center;">
+                          <div style="font-size:2.2em;">🌟</div>
+                          <h4 style="margin:12px 0 8px 0;">Ventajas</h4>
+                          <ul style="text-align:left; font-size:0.98em;">
+                            <li>🤖 Automatización del proceso de build</li>
+                            <li>🚀 Despliegue rápido y seguro</li>
+                            <li>📡 Actualizaciones OTA (Over The Air)</li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="glass-card" style="margin-bottom:32px;">
+                      <h3 class="section-title">🌐 Accesos Rápidos</h3>
+                      <div style="display:flex; flex-wrap:wrap; gap:12px; justify-content:center;">
+                        <a href="src/docs-deploy.html" target="_blank" class="btn small-btn primary-btn">🚀 Docs Despliegue y Build</a>
+                        <a href="#tab-testing" onclick="showTab('testing')" class="btn small-btn secondary-btn">🧪 Testing y Calidad</a>
+                        <a href="#tab-i18n" onclick="showTab('i18n')" class="btn small-btn primary-btn">🌍 Internacionalización</a>
+                      </div>
+                    </div>
+                    <p style="text-align:center; margin-top:18px;"><span class="last-updated"></span></p>
+                  </div>
+                  <div id="tab-dev" class="tab-content">
+                    <div class="glass-card" style="margin-bottom:32px;">
+                      <h2 class="section-title" style="font-size:2em;">📚 Guías de Desarrollo</h2>
+                      <div style="display:flex; flex-wrap:wrap; gap:32px; justify-content:center;">
+                        <div style="flex:1 1 260px; min-width:200px; max-width:320px; background:var(--glass); border-radius:18px; box-shadow:var(--card-shadow); padding:24px 18px; margin-bottom:18px; text-align:center;">
+                          <div style="font-size:2.2em;">🚀</div>
+                          <h4 style="margin:12px 0 8px 0;">Onboarding</h4>
+                          <ul style="text-align:left; font-size:0.98em;">
+                            <li>🔗 Clonar el repositorio</li>
+                            <li>📦 Instalar dependencias</li>
+                            <li>⚙️ Configurar variables de entorno</li>
+                            <li>▶️ Iniciar el proyecto</li>
+                          </ul>
+                        </div>
+                        <div style="flex:1 1 260px; min-width:200px; max-width:320px; background:var(--glass); border-radius:18px; box-shadow:var(--card-shadow); padding:24px 18px; margin-bottom:18px; text-align:center;">
+                          <div style="font-size:2.2em;">👍</div>
+                          <h4 style="margin:12px 0 8px 0;">Buenas Prácticas</h4>
+                          <ul style="text-align:left; font-size:0.98em;">
+                            <li>📝 Convenciones de código TypeScript</li>
+                            <li>🧩 Componentes tipados</li>
+                            <li>🔄 Uso de hooks personalizados</li>
+                            <li>💬 Documentación y comentarios claros</li>
+                          </ul>
+                        </div>
+                        <div style="flex:1 1 260px; min-width:200px; max-width:320px; background:var(--glass); border-radius:18px; box-shadow:var(--card-shadow); padding:24px 18px; margin-bottom:18px; text-align:center;">
+                          <div style="font-size:2.2em;">✅</div>
+                          <h4 style="margin:12px 0 8px 0;">Checklist de Desarrollo</h4>
+                          <ul style="text-align:left; font-size:0.98em;">
+                            <li>🧪 Tests pasan</li>
+                            <li>⚡ Performance optimizada</li>
+                            <li>♿ Accesibilidad implementada</li>
+                            <li>📖 Documentación actualizada</li>
+                          </ul>
+                        </div>
+                        <div style="flex:1 1 260px; min-width:200px; max-width:320px; background:var(--glass); border-radius:18px; box-shadow:var(--card-shadow); padding:24px 18px; margin-bottom:18px; text-align:center;">
+                          <div style="font-size:2.2em;">🔗</div>
+                          <h4 style="margin:12px 0 8px 0;">Recursos Útiles</h4>
+                          <ul style="text-align:left; font-size:0.98em;">
+                            <li><a href="https://github.com/MussikOn/APP_MussikOn_React_Native_Expo" target="_blank">📱 Repositorio Frontend</a></li>
+                            <li><a href="https://github.com/MussikOn/APP_MussikOn_Express" target="_blank">🖥️ Repositorio Backend</a></li>
+                            <li><a href="https://github.com/MussikOn/Static_Page_MussikOn" target="_blank">🌐 Repositorio Static Page</a></li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="glass-card" style="margin-bottom:32px;">
+                      <h3 class="section-title"> Accesos Rápidos</h3>
+                      <div style="display:flex; flex-wrap:wrap; gap:12px; justify-content:center;">
+                        <a href="src/docs-dev.html" target="_blank" class="btn small-btn primary-btn">📚 Docs Guías de Desarrollo</a>
+                        <a href="#tab-deploy" onclick="showTab('deploy')" class="btn small-btn secondary-btn">🚀 Despliegue y Build</a>
+                        <a href="#tab-testing" onclick="showTab('testing')" class="btn small-btn primary-btn">🧪 Testing y Calidad</a>
+                      </div>
+                    </div>
+                    <p style="text-align:center; margin-top:18px;"><span class="last-updated"></span></p>
+                  </div>
+                  <div id="tab-componentes" class="tab-content">
+                    <div class="glass-card" style="margin-bottom:32px;">
+                      <h2 class="section-title" style="font-size:2em;">�� Componentes UI</h2>
+                      <div style="display:flex; flex-wrap:wrap; gap:32px; justify-content:center;">
+                        <div style="flex:1 1 220px; min-width:180px; max-width:260px; background:var(--glass); border-radius:18px; box-shadow:var(--card-shadow); padding:20px 12px; margin-bottom:18px; text-align:center;">
+                          <div style="font-size:2em;">🔘</div>
+                          <h4 style="margin:10px 0 8px 0;">Button</h4>
+                          <div style="font-size:0.98em;">Botones primarios, secundarios, de acción, de deshacer, de cerrar</div>
+                        </div>
+                        <div style="flex:1 1 220px; min-width:180px; max-width:260px; background:var(--glass); border-radius:18px; box-shadow:var(--card-shadow); padding:20px 12px; margin-bottom:18px; text-align:center;">
+                          <div style="font-size:2em;">🔤</div>
+                          <h4 style="margin:10px 0 8px 0;">Input</h4>
+                          <div style="font-size:0.98em;">Texto, números, email, contraseña, búsqueda, selección de fecha</div>
+                        </div>
+                        <div style="flex:1 1 220px; min-width:180px; max-width:260px; background:var(--glass); border-radius:18px; box-shadow:var(--card-shadow); padding:20px 12px; margin-bottom:18px; text-align:center;">
+                          <div style="font-size:2em;">🃏</div>
+                          <h4 style="margin:10px 0 8px 0;">Card</h4>
+                          <div style="font-size:0.98em;">Tarjetas de información, de acción, de notificación, de usuario</div>
+                        </div>
+                        <div style="flex:1 1 220px; min-width:180px; max-width:260px; background:var(--glass); border-radius:18px; box-shadow:var(--card-shadow); padding:20px 12px; margin-bottom:18px; text-align:center;">
+                          <div style="font-size:2em;">📋</div>
+                          <h4 style="margin:10px 0 8px 0;">List</h4>
+                          <div style="font-size:0.98em;">Listas simples, listas con iconos, listas con acciones</div>
+                        </div>
+                        <div style="flex:1 1 220px; min-width:180px; max-width:260px; background:var(--glass); border-radius:18px; box-shadow:var(--card-shadow); padding:20px 12px; margin-bottom:18px; text-align:center;">
+                          <div style="font-size:2em;">🪟</div>
+                          <h4 style="margin:10px 0 8px 0;">Modal</h4>
+                          <div style="font-size:0.98em;">Ventanas modales, diálogos, confirmaciones, alertas</div>
+                        </div>
+                        <div style="flex:1 1 220px; min-width:180px; max-width:260px; background:var(--glass); border-radius:18px; box-shadow:var(--card-shadow); padding:20px 12px; margin-bottom:18px; text-align:center;">
+                          <div style="font-size:2em;">🔔</div>
+                          <h4 style="margin:10px 0 8px 0;">Toast</h4>
+                          <div style="font-size:0.98em;">Notificaciones de estado, mensajes de éxito, error, advertencia</div>
+                        </div>
+                        <div style="flex:1 1 220px; min-width:180px; max-width:260px; background:var(--glass); border-radius:18px; box-shadow:var(--card-shadow); padding:20px 12px; margin-bottom:18px; text-align:center;">
+                          <div style="font-size:2em;">⏳</div>
+                          <h4 style="margin:10px 0 8px 0;">Loading</h4>
+                          <div style="font-size:0.98em;">Indicadores de carga, spinners, skeletons</div>
+                        </div>
+                        <div style="flex:1 1 220px; min-width:180px; max-width:260px; background:var(--glass); border-radius:18px; box-shadow:var(--card-shadow); padding:20px 12px; margin-bottom:18px; text-align:center;">
+                          <div style="font-size:2em;">🛡️</div>
+                          <h4 style="margin:10px 0 8px 0;">Error Boundary</h4>
+                          <div style="font-size:0.98em;">Manejo de errores en componentes</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="glass-card" style="margin-bottom:32px; text-align:center;">
+                      <h3 class="section-title">✨ Ejemplo Visual</h3>
+                      <img src="assets/Logo_app1.png" alt="Vista de ejemplo de un componente UI de MussikOn" loading="lazy" style="max-width:180px; margin:18px auto; display:block; border-radius:12px; box-shadow:0 2px 12px #0002;">
+                    </div>
+                    <div class="glass-card" style="margin-bottom:32px;">
+                      <h3 class="section-title">📖 Enlaces a Documentación</h3>
+                      <div style="display:flex; flex-wrap:wrap; gap:12px; justify-content:center;">
+                        <a href="src/docs-componentes.html" target="_blank" class="btn small-btn primary-btn">🧩 Docs Componentes</a>
+                        <a href="#tab-dev" onclick="showTab('dev')" class="btn small-btn secondary-btn">📚 Guías de Desarrollo</a>
+                        <a href="#tab-deploy" onclick="showTab('deploy')" class="btn small-btn primary-btn">🚀 Despliegue y Build</a>
+                      </div>
+                    </div>
+                    <p style="text-align:center; margin-top:18px;"><span class="last-updated"></span></p>
+                  </div>
+                  <div id="tab-analisis" class="tab-content">
+                    <div class="glass-card" style="margin-bottom:32px;">
+                      <h2 class="section-title" style="font-size:2em;">🔍 Análisis de Estado Actual</h2>
+                      <div style="display:flex; flex-wrap:wrap; gap:32px; justify-content:center;">
+                        <div style="flex:1 1 260px; min-width:200px; max-width:320px; background:var(--glass); border-radius:18px; box-shadow:var(--card-shadow); padding:24px 18px; margin-bottom:18px; text-align:center;">
+                          <div style="font-size:2.2em;">📊</div>
+                          <h4 style="margin:12px 0 8px 0;">Métricas Clave</h4>
+                          <ul style="text-align:left; font-size:0.98em;">
+                            <li>✅ Cobertura de código: 85%</li>
+                            <li>⚙️ Funcionalidades core: 90% completadas</li>
+                            <li>🌟 Calidad de código: 9/10</li>
+                          </ul>
+                        </div>
+                        <div style="flex:1 1 260px; min-width:200px; max-width:320px; background:var(--glass); border-radius:18px; box-shadow:var(--card-shadow); padding:24px 18px; margin-bottom:18px; text-align:center;">
+                          <div style="font-size:2.2em;">⚠️</div>
+                          <h4 style="margin:12px 0 8px 0;">Riesgos</h4>
+                          <ul style="text-align:left; font-size:0.98em;">
+                            <li>🧪 Automatización de pruebas E2E pendiente</li>
+                            <li>⏳ Optimización de performance en progreso</li>
+                          </ul>
+                        </div>
+                        <div style="flex:1 1 260px; min-width:200px; max-width:320px; background:var(--glass); border-radius:18px; box-shadow:var(--card-shadow); padding:24px 18px; margin-bottom:18px; text-align:center;">
+                          <div style="font-size:2.2em;">💡</div>
+                          <h4 style="margin:12px 0 8px 0;">Oportunidades</h4>
+                          <ul style="text-align:left; font-size:0.98em;">
+                            <li>🌍 Expansión internacional</li>
+                            <li>✨ Nuevas features y mejoras UI/UX</li>
+                          </ul>
+                        </div>
+                        <div style="flex:1 1 260px; min-width:200px; max-width:320px; background:var(--glass); border-radius:18px; box-shadow:var(--card-shadow); padding:24px 18px; margin-bottom:18px; text-align:center;">
+                          <div style="font-size:2.2em;">🚀</div>
+                          <h4 style="margin:12px 0 8px 0;">Próximos Pasos</h4>
+                          <ul style="text-align:left; font-size:0.98em;">
+                            <li>✅ Completar automatización de pruebas</li>
+                            <li>⚡ Optimizar performance</li>
+                            <li>📚 Expandir documentación</li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="glass-card" style="margin-bottom:32px;">
+                      <h3 class="section-title">🌐 Accesos Rápidos</h3>
+                      <div style="display:flex; flex-wrap:wrap; gap:12px; justify-content:center;">
+                        <a href="src/docs-analisis.html" target="_blank" class="btn small-btn primary-btn">🔍 Docs Análisis</a>
+                        <a href="#tab-componentes" onclick="showTab('componentes')" class="btn small-btn secondary-btn">🧩 Componentes</a>
+                        <a href="#tab-dev" onclick="showTab('dev')" class="btn small-btn primary-btn">📚 Guías de Desarrollo</a>
+                      </div>
+                    </div>
+                    <p style="text-align:center; margin-top:18px;"><span class="last-updated"></span></p>
+                  </div>
+              </div>
+          </section>
+
+          <section id="devs" class="section-devs doc-section">
+              <div class="container">
+                  <h2>👨‍💻 Para Desarrolladores</h2>
+                  <p>Encuentra aquí los enlaces a los repositorios de MussikOn y la documentación técnica:</p>
+                  <div class="github-links">
+                      <div class="github-card">
+                        <a href="https://github.com/JefryAstacio/APP_MussikOn_React_Native_Expo" target="_blank"><i class="fab fa-github"></i> <span>Frontend (React Native + Expo) 🎸</span></a>
+                        <p>App móvil multiplataforma, UI moderna, matching en tiempo real. 📱</p>
+                  </div>
+                      <div class="github-card">
+                        <a href="https://github.com/JefryAstacio/APP_MussikOn_Express" target="_blank"><i class="fab fa-github"></i> <span>Backend (Node.js + Express) ⚡</span></a>
+                        <p>API REST, lógica de matching, sockets y gestión de eventos. 🔗</p>
+                      </div>
+                      <div class="github-card">
+                        <a href="https://github.com/JefryAstacio/Static_Page_MussikOn" target="_blank"><i class="fab fa-github"></i> <span>Página Estática / Landing 🌐</span></a>
+                        <p>Landing page, documentación y recursos para usuarios y devs. 📝</p>
+                      </div>
+                  </div>
+                  <div style="margin-top: 18px;">
+                    <a href="/api-docs" target="_blank" class="btn small-btn primary-btn"><i class="fas fa-book"></i> 📖 Swagger API Docs</a>
+                  </div>
+                  <p style="margin-top: 18px;">Documentación técnica, endpoints, arquitectura y ejemplos de uso están disponibles en las secciones superiores.</p>
+              </div>
+          </section>
+      </main>
+
+      <nav id="tab-toc" aria-label="Índice de la sección" style="width:220px;min-width:180px;max-width:240px;margin-left:24px;padding:18px 0 0 12px;position:sticky;top:90px;align-self:flex-start;display:none;"></nav>
+    </div>
 
     <footer>
         <div class="container">
             <div class="footer-grid">
                 <div class="footer-col">
-                    <h3>Mussikon</h3>
-                    <p>Tu destino para instrumentos musicales de calidad y servicios expertos.</p>
+                    <h3>🎵 Mussikon</h3>
+                    <p>Tu destino para la gestión musical moderna y servicios expertos. 🎶</p>
                 </div>
                 <div class="footer-col">
-                    <h3>Enlaces Rápidos</h3>
+                    <h3>�� Enlaces Rápidos</h3>
                     <ul>
-                        <li><a href="index.html">Inicio</a></li>
-                        <li><a href="about.html">Sobre Nosotros</a></li>
-                        <li><a href="products.html">Productos</a></li>
-                        <li><a href="services.html">Servicios</a></li>
-                        <li><a href="contact.html">Contacto</a></li>
+                        <li><a href="#inicio">Inicio</a></li>
+                        <li><a href="#app">La App</a></li>
+                        <li><a href="#docs">Documentación</a></li>
+                        <li><a href="#devs">Desarrolladores</a></li>
+                        <li><a href="#contact">Contacto</a></li>
                     </ul>
                 </div>
                 <div class="footer-col">
-                    <h3 id="contact">Contacto</h3>
+                    <h3 id="contact">📬 Contacto</h3>
                     <p><i class="fas fa-map-marker-alt"></i> Calle El Binito #26, Sector El Mamey, Santo Domingo Norte</p>
                     <p><i class="fas fa-phone-alt"></i> (809) 858-4001</p>
                     <p><i class="fas fa-envelope"></i> info@mussikon.com</p>
                 </div>
                 <div class="footer-col">
-                    <h3>Síguenos</h3>
+                    <h3>🌟 Síguenos</h3>
                     <div class="social-links">
                         <a href="https://facebook.com/mussikon" target="_blank"><i class="fab fa-facebook-f"></i></a>
                         <a href="https://instagram.com/mussikon" target="_blank"><i class="fab fa-instagram"></i></a>
@@ -130,11 +1376,38 @@
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2025 Mussikon. Todos los derechos reservados.</p>
+                <p>🎼 &copy; 2025 Mussikon. Todos los derechos reservados.</p>
             </div>
         </div>
     </footer>
 
     <script src="js/script.js"></script>
+    <script>
+      function showTab(tab) {
+        document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+        document.querySelectorAll('.tab-content').forEach(tabC => tabC.classList.remove('active'));
+        document.getElementById('tab-' + tab).classList.add('active');
+        event.target.classList.add('active');
+      }
+      function filterDocs() {
+        const q = document.getElementById('doc-search').value.toLowerCase();
+        document.querySelectorAll('.doc-section').forEach(section => {
+          const text = section.innerText.toLowerCase();
+          if (!q || text.includes(q)) {
+            section.classList.remove('hide');
+          } else {
+            section.classList.add('hide');
+          }
+        });
+      }
+      function clearSearch() {
+        document.getElementById('doc-search').value = '';
+        filterDocs();
+      }
+      function toggleMobileMenu() {
+        const navUl = document.querySelector('nav ul');
+        navUl.classList.toggle('active');
+      }
+    </script>
 </body>
 </html>

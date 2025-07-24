@@ -1,0 +1,21 @@
+{
+  "language": "Español",
+  "select_language": "Idioma",
+  "home": "Inicio",
+  "app": "La App",
+  "docs": "Documentación",
+  "devs": "Desarrolladores",
+  "contact": "Contacto",
+  "search_placeholder": "Buscar palabras clave...",
+  "search_label": "Buscar en la documentación",
+  "last_updated": "Última actualización:",
+  "copy": "Copiar",
+  "copied": "¡Copiado!",
+  "no_results": "No se encontraron resultados.",
+  "toc": "Índice",
+  "no_sections": "No hay secciones en este tab.",
+  "loading": "Cargando contenido...",
+  "load_error": "No se pudo cargar el contenido.",
+  "dark_mode": "Modo oscuro",
+  "light_mode": "Modo claro"
+} 

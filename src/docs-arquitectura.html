@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Arquitectura - MussikOn</title>
+  <link rel="stylesheet" href="../css/modern.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    /* Estilos adicionales específicos si se requieren */
+    .quick-link-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: var(--glass);
+      backdrop-filter: var(--glass-blur);
+      border-radius: 18px;
+      box-shadow: var(--card-shadow);
+      padding: 22px 0 14px 0;
+      min-width: 120px;
+      font-size: 1.5em;
+      font-weight: 600;
+      color: var(--primary);
+      text-decoration: none;
+      transition: background 0.18s, color 0.18s, transform 0.18s;
+      border: 2px solid transparent;
+      margin-bottom: 0;
+      position: relative;
+      width: 100%;
+      max-width: 220px;
+      box-sizing: border-box;
+    }
+    .quick-link-card span {
+      font-size: 1.02em;
+      font-weight: 500;
+      margin-top: 8px;
+      color: var(--text);
+    }
+    .quick-link-card:hover, .quick-link-card:focus {
+      background: var(--primary-gradient);
+      color: #fff;
+      transform: translateY(-4px) scale(1.04);
+      border: 2px solid var(--accent);
+    }
+    .quick-link-card:hover span, .quick-link-card:focus span {
+      color: #fff;
+    }
+    .quick-link-card.alt {
+      background: rgba(0,229,255,0.10);
+      color: var(--primary);
+    }
+    .quick-link-card.alt:hover, .quick-link-card.alt:focus {
+      background: linear-gradient(135deg, #00e5ff 0%, #1565c0 100%);
+      color: #fff;
+    }
+    .quick-link-desc {
+      display: block;
+      font-size: 0.92em;
+      color: #3a5069;
+      margin-top: 6px;
+      font-weight: 400;
+      opacity: 0.85;
+      text-align: center;
+      line-height: 1.2;
+    }
+    .quick-link-card:hover .quick-link-desc, .quick-link-card:focus .quick-link-desc {
+      color: #fff;
+      opacity: 1;
+    }
+    .glass-card {
+      background: var(--glass);
+      backdrop-filter: var(--glass-blur);
+      border-radius: var(--border-radius);
+      box-shadow: var(--card-shadow);
+      padding: 24px 14px;
+      margin: 24px auto;
+      max-width: 900px;
+      position: relative;
+      animation: fadeInUp 0.7s cubic-bezier(.23,1.01,.32,1) both;
+      box-sizing: border-box;
+    }
+    .glass-card h2, .glass-card h3, .glass-card h4 {
+      color: var(--primary);
+      margin-top: 0;
+      font-size: 1.3em;
+    }
+    .glass-card ul {
+      list-style: none;
+      padding-left: 0;
+    }
+    .glass-card ul li {
+      margin-bottom: 10px;
+      position: relative;
+      padding-left: 28px;
+    }
+    .glass-card ul li:before {
+      content: '\2714';
+      color: var(--accent);
+      position: absolute;
+      left: 0;
+      font-size: 1.1em;
+      top: 2px;
+    }
+    @media (max-width: 900px) {
+      .glass-card {
+        padding: 18px 6vw;
+        margin: 18px 0;
+        max-width: 98vw;
+      }
+      .hero-modern h1 {
+        font-size: 2em;
+      }
+      .quick-link-card {
+        font-size: 1.15em;
+        min-width: 100px;
+        max-width: 100%;
+      }
+    }
+    @media (max-width: 600px) {
+      .glass-card {
+        padding: 12px 2vw;
+        margin: 12px 0;
+      }
+      .hero-modern h1 {
+        font-size: 1.2em;
+      }
+      .quick-link-card {
+        font-size: 1em;
+        padding: 16px 0 10px 0;
+      }
+      .quick-link-card span {
+        font-size: 0.98em;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <div class="logo">
+        <a href="../index.html"> <img class="img-logo" src="../assets/Logo_Letter.png" alt=""></a>
+      </div>
+      <button class="mobile-menu-button" aria-label="Abrir menú" onclick="toggleMobileMenu()"><i class="fas fa-bars"></i></button>
+      <nav>
+        <ul>
+          <li><a href="../index.html#inicio">Inicio</a></li>
+          <li><a href="../index.html#app">La App</a></li>
+          <li><a href="../index.html#docs">Documentación</a></li>
+          <li><a href="../index.html#devs">Desarrolladores</a></li>
+          <li><a href="../index.html#contact">Contacto</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+  <section class="hero-modern">
+    <div class="icon"><i class="fas fa-cubes"></i></div>
+    <h1>Arquitectura MussikOn</h1>
+    <p>Clean Architecture & DDD para apps móviles modernas.<br>Escalable, mantenible y lista para el futuro.</p>
+    <div class="glass-card" style="margin:36px auto 0 auto; max-width:1000px;">
+      <h4 style="margin-bottom:18px;">🔎 Accesos Rápidos</h4>
+      <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(140px,1fr)); gap:14px; justify-items:center;">
+        <a href="#vision" class="quick-link-card">🔭<span>Visión</span><small class="quick-link-desc">Resumen y propósito de la arquitectura</small></a>
+        <a href="#patron" class="quick-link-card alt">🏗️<span>Patrón</span><small class="quick-link-desc">Clean Architecture y capas</small></a>
+        <a href="#carpetas" class="quick-link-card">📁<span>Estructura</span><small class="quick-link-desc">Organización de carpetas y archivos</small></a>
+        <a href="#flujos" class="quick-link-card alt">🔄<span>Flujos</span><small class="quick-link-desc">Flujo de datos y procesos clave</small></a>
+        <a href="#patrones" class="quick-link-card">🧩<span>Patrones</span><small class="quick-link-desc">Patrones de diseño implementados</small></a>
+        <a href="#estado" class="quick-link-card alt">📦<span>Estado</span><small class="quick-link-desc">Gestión de estado y slices</small></a>
+        <a href="#api" class="quick-link-card">🔌<span>APIs</span><small class="quick-link-desc">Integración de servicios y sockets</small></a>
+        <a href="#i18n" class="quick-link-card alt">🌍<span>i18n</span><small class="quick-link-desc">Internacionalización</small></a>
+        <a href="#diseño" class="quick-link-card">🎨<span>Diseño</span><small class="quick-link-desc">Sistema de diseño y temas</small></a>
+        <a href="#seguridad" class="quick-link-card alt">🔐<span>Seguridad</span><small class="quick-link-desc">Autenticación y validación</small></a>
+        <a href="#navegacion" class="quick-link-card">🧭<span>Navegación</span><small class="quick-link-desc">Rutas y navegación</small></a>
+        <a href="#testing" class="quick-link-card alt">🧪<span>Testing</span><small class="quick-link-desc">Estrategia de pruebas</small></a>
+        <a href="#performance" class="quick-link-card">⚡<span>Performance</span><small class="quick-link-desc">Optimización y métricas</small></a>
+        <a href="#ciclo" class="quick-link-card alt">🔁<span>Ciclo</span><small class="quick-link-desc">Ciclo de desarrollo y comandos</small></a>
+        <a href="#mis-solicitudes" class="quick-link-card">📝<span>Mis Solicitudes</span><small class="quick-link-desc">Pantalla central y diagrama</small></a>
+      </div>
+    </div>
+  </section>
+  <div class="glass-card" id="vision">
+    <h2 class="section-title">Visión General</h2>
+    <p><b>MussikOn</b> sigue una arquitectura modular basada en <b>Clean Architecture</b> y <b>Domain-Driven Design (DDD)</b>, optimizada para aplicaciones móviles con React Native y Expo. Esta arquitectura está diseñada para ser escalable, mantenible y fácil de entender, separando responsabilidades y permitiendo independencia tecnológica.</p>
+  </div>
+  <div class="glass-card" id="patron">
+    <h2 class="section-title">Patrón Arquitectónico</h2>
+    <pre class="code-block"><code class="language-bash">┌─────────────────────────────────────┐
+│           Presentation Layer        │ ← React Components, Screens
+├─────────────────────────────────────┤
+│           Business Logic Layer      │ ← Services, Use Cases
+├─────────────────────────────────────┤
+│           Data Layer                │ ← APIs, Local Storage
+└─────────────────────────────────────┘
+</code></pre>
+    <ul>
+      <li><b>Separación de Responsabilidades:</b> Cada capa tiene una responsabilidad específica.</li>
+      <li><b>Dependencias Unidireccionales:</b> Las dependencias fluyen hacia adentro (de UI a lógica, de lógica a datos).</li>
+      <li><b>Independencia de Frameworks:</b> La lógica de negocio es independiente de React Native.</li>
+      <li><b>Testabilidad:</b> Cada capa puede ser testeada independientemente.</li>
+    </ul>
+  </div>
+  <div class="glass-card" id="carpetas">
+    <h2 class="section-title">Estructura de Carpetas</h2>
+    <pre class="code-block"><code class="language-bash">src/
+├── app/                    # Punto de entrada de la aplicación
+│   └── App.tsx           # Componente raíz con configuración global
+├── appTypes/              # Definiciones de tipos TypeScript
+│   └── DatasTypes.ts     # Tipos compartidos de la aplicación
+├── components/            # Componentes reutilizables
+│   ├── ui/               # Componentes de interfaz básicos
+│   ├── features/         # Componentes específicos de funcionalidades
+│   ├── forms/            # Componentes de formularios
+│   └── navigation/       # Componentes de navegación
+├── screens/              # Pantallas de la aplicación
+│   ├── auth/             # Pantallas de autenticación
+│   ├── dashboard/        # Pantalla principal
+│   ├── events/           # Pantallas de eventos
+│   ├── profile/          # Pantallas de perfil
+│   └── settings/         # Pantallas de configuración
+├── services/             # Servicios y APIs
+│   ├── api.ts           # Cliente HTTP configurado
+│   └── events.ts        # Servicios específicos de eventos
+├── store/                # Gestión de estado global (Redux)
+│   ├── store.ts         # Configuración del store
+│   └── slices/          # Slices de Redux por dominio
+├── hooks/                # Custom hooks
+│   └── useSocket.tsx    # Hook para WebSocket
+├── utils/                # Utilidades y helpers
+│   ├── functions.ts     # Funciones de utilidad
+│   ├── auth.ts          # Utilidades de autenticación
+│   └── socket.ts        # Utilidades de WebSocket
+├── config/               # Configuración de la aplicación
+│   └── environment.ts   # Variables de entorno
+├── contexts/             # Contextos de React
+│   └── LanguageContext.tsx # Contexto de idioma
+├── i18n/                 # Internacionalización
+│   ├── index.ts         # Configuración de i18next
+│   └── locales/         # Archivos de traducción
+├── theme/                # Sistema de diseño
+│   ├── colors.ts        # Paleta de colores
+│   ├── typography.ts    # Tipografías
+│   ├── spacing.ts       # Espaciado
+│   └── theme.ts         # Configuración de temas
+├── styles/               # Estilos globales
+│   ├── Styles.ts        # Estilos compartidos
+│   └── media_responsive.ts # Responsive design
+└── navigation/           # Configuración de navegación
+    └── index.ts         # Configuración de rutas
+</code></pre>
+  </div>
+  <div class="glass-card" id="flujos">
+    <h2 class="section-title">Flujo de Datos</h2>
+    <ul>
+      <li><b>Flujo de Autenticación:</b> Usuario → Login Screen → Auth Service → API → Secure Store → Redux Store → Navigation</li>
+      <li><b>Flujo de Eventos:</b> Event Screen → Event Service → API → Redux Store → UI Update</li>
+      <li><b>Flujo de Chat en Tiempo Real:</b> Socket Connection → Message Handler → Redux Store → UI Update</li>
+    </ul>
+  </div>
+  <div class="glass-card" id="patrones">
+    <h2 class="section-title">Patrones de Diseño Implementados</h2>
+    <ul>
+      <li><b>Container/Presentational Pattern:</b> Separación entre lógica de datos y presentación visual.</li>
+      <li><b>Custom Hooks Pattern:</b> Lógica reutilizable y desacoplada de la UI.</li>
+      <li><b>Service Layer Pattern:</b> Servicios centralizados para acceso a datos y lógica de negocio.</li>
+    </ul>
+    <h4>Ejemplo de Container/Presentational</h4>
+    <pre class="code-block"><code class="language-tsx">// Container Component
+const EventListContainer = () => {
+  const events = useAppSelector(state => state.events.list);
+  const dispatch = useAppDispatch();
+  return <EventList events={events} onEventPress={handleEventPress} />;
+};
+// Presentational Component
+const EventList = ({ events, onEventPress }) => (
+  <FlatList
+    data={events}
+    renderItem={({ item }) => <EventCard event={item} onPress={onEventPress} />}
+  />
+);
+</code></pre>
+    <h4>Ejemplo de Custom Hook</h4>
+    <pre class="code-block"><code class="language-tsx">export const useAuth = () => {
+  const { isAuthenticated, user } = useAppSelector(state => state.auth);
+  const dispatch = useAppDispatch();
+  const login = async (credentials) => { /* lógica de login */ };
+  const logout = () => { dispatch(logout()); };
+  return { isAuthenticated, user, login, logout };
+};
+</code></pre>
+    <h4>Ejemplo de Service Layer</h4>
+    <pre class="code-block"><code class="language-ts">export const eventService = {
+  async getEvents() {
+    return apiService.get('/events');
+  },
+  async createEvent(eventData) {
+    return apiService.post('/events', eventData);
+  }
+};
+</code></pre>
+  </div>
+  <div class="glass-card" id="estado">
+    <h2 class="section-title">Gestión de Estado</h2>
+    <ul>
+      <li><b>Redux Toolkit:</b> Store centralizado, slices por dominio, DevTools.</li>
+      <li><b>Slices implementados:</b> authSlice, themeSlice, languageSlice, notificationsSlice, appSlice, formsSlice.</li>
+    </ul>
+  </div>
+  <div class="glass-card" id="api">
+    <h2 class="section-title">Integración de APIs y WebSocket</h2>
+    <ul>
+      <li><b>Axios:</b> Cliente HTTP principal, interceptores, reintentos, timeouts.</li>
+      <li><b>Socket.io:</b> Comunicación en tiempo real, reconexión automática, eventos tipados.</li>
+    </ul>
+  </div>
+  <div class="glass-card" id="i18n">
+    <h2 class="section-title">Internacionalización</h2>
+    <ul>
+      <li><b>i18next:</b> Detección automática, persistencia, fallbacks, interpolación.</li>
+    </ul>
+  </div>
+  <div class="glass-card" id="diseño">
+    <h2 class="section-title">Sistema de Diseño</h2>
+    <ul>
+      <li><b>Design tokens:</b> Colores, tipografías, espaciado, bordes.</li>
+      <li><b>Temas:</b> Claro/oscuro, responsive.</li>
+    </ul>
+  </div>
+  <div class="glass-card" id="seguridad">
+    <h2 class="section-title">Seguridad</h2>
+    <ul>
+      <li><b>JWT, Secure Store, token refresh, logout seguro.</b></li>
+      <li><b>Validación frontend, sanitización, manejo de errores.</b></li>
+    </ul>
+  </div>
+  <div class="glass-card" id="navegacion">
+    <h2 class="section-title">Navegación</h2>
+    <ul>
+      <li><b>React Navigation:</b> Stack, Tab, Drawer, deep linking.</li>
+    </ul>
+  </div>
+  <div class="glass-card" id="testing">
+    <h2 class="section-title">Testing Strategy</h2>
+    <ul>
+      <li><b>Unit, integration y E2E tests:</b> Jest, React Native Testing Library, Mock Service Worker.</li>
+    </ul>
+  </div>
+  <div class="glass-card" id="performance">
+    <h2 class="section-title">Performance</h2>
+    <ul>
+      <li><b>Lazy loading, memoization, bundle splitting, optimización de imágenes.</b></li>
+      <li><b>Métricas:</b> bundle < 50MB, load < 3s, memoria < 200MB, 60 FPS.</li>
+    </ul>
+  </div>
+  <div class="glass-card" id="ciclo">
+    <h2 class="section-title">Ciclo de Desarrollo</h2>
+    <pre class="code-block"><code class="language-bash">npm start                # Iniciar en modo desarrollo
+npm run android          # Ejecutar en Android
+npm run ios              # Ejecutar en iOS
+npm test                 # Ejecutar tests
+eas build --platform android  # Build para Android
+eas build --platform ios      # Build para iOS
+</code></pre>
+  </div>
+  <div class="glass-card">
+    <h2 class="section-title">Deployment</h2>
+    <ul>
+      <li><b>EAS Build:</b> Perfiles, CI/CD, OTA updates.</li>
+    </ul>
+  </div>
+  <div class="glass-card" id="mis-solicitudes">
+    <h2 class="section-title">Pantalla "Mis Solicitudes" y Arquitectura</h2>
+    <p>La pantalla <b>"Mis Solicitudes"</b> es un componente central de la arquitectura moderna de MussikOn. Permite a músicos y organizadores gestionar todas sus solicitudes/eventos en progreso desde un solo lugar, accesible desde el menú lateral.</p>
+    <ul>
+      <li>Accesible desde el menú lateral para ambos roles.</li>
+      <li>Usa el componente reutilizable <code>EventList</code> en diferentes modos (pendientes, asignados/agendados, todos).</li>
+      <li>Consume los endpoints REST <code>/events/my-pending</code>, <code>/events/my-assigned</code>, <code>/events/my-scheduled</code>, <code>/events/my-events</code>.</li>
+      <li>UI moderna con tabs y feedback visual inmediato.</li>
+    </ul>
+    <h4>Diagrama de Navegación</h4>
+    <pre class="code-block"><code class="language-bash">graph TD;
+  Sidebar --> MyEventsList;
+  MyEventsList --> EventList;
+  EventList --> API[API REST /events/*];
+  Sidebar --> ShareMusician;
+  Sidebar --> EventList;
+  Sidebar --> Dashboard;
+</code></pre>
+  </div>
+  <div class="glass-card" style="text-align:center;">
+    <h2 class="section-title">Referencias y Enlaces</h2>
+    <a href="https://github.com/JefryAstacio/APP_MussikOn_React_Native_Expo" target="_blank" class="btn primary-btn" style="margin:8px 12px;">Repositorio Frontend</a>
+    <a href="https://github.com/JefryAstacio/APP_Mussikon_Express" target="_blank" class="btn primary-btn" style="margin:8px 12px;">Repositorio Backend</a>
+    <a href="https://github.com/JefryAstacio/Static_Page_MussikOn" target="_blank" class="btn primary-btn" style="margin:8px 12px;">Repositorio Página Estática</a>
+    <a href="/api-docs" target="_blank" class="btn secondary-btn" style="margin:8px 12px;">Swagger API Docs</a>
+    <p style="margin-top:16px;"><i>Última actualización: Diciembre 2024</i></p>
+  </div>
+  <footer>
+    <div class="social-links">
+      <a href="https://facebook.com/mussikon" target="_blank"><i class="fab fa-facebook-f"></i></a>
+      <a href="https://instagram.com/mussikon" target="_blank"><i class="fab fa-instagram"></i></a>
+      <a href="https://youtube.com/mussikon" target="_blank"><i class="fab fa-youtube"></i></a>
+    </div>
+    <div style="margin-top:12px;">&copy; 2025 MussikOn. Todos los derechos reservados.</div>
+  </footer>
+  <script>
+    function toggleMobileMenu() {
+      const navUl = document.querySelector('nav ul');
+      navUl.classList.toggle('active');
+    }
+  </script>
+</body>
+</html> 
